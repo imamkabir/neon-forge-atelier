@@ -13,7 +13,20 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        headline: ['Merriweather', 'serif'],
+        body: ['Poppins', 'sans-serif'],
+      },
       colors: {
+        // Neon Tech Brand Colors
+        'neon-blue': 'hsl(var(--neon-blue))',
+        'accent-red': 'hsl(var(--accent-red))',
+        'luxury-purple': 'hsl(var(--luxury-purple))',
+        'luxury-lavender': 'hsl(var(--luxury-lavender))',
+        'luxury-periwinkle': 'hsl(var(--luxury-periwinkle))',
+        'canvas-dark': 'hsl(var(--canvas-dark))',
+        'canvas-surface': 'hsl(var(--canvas-surface))',
+        'canvas-elevated': 'hsl(var(--canvas-elevated))',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
