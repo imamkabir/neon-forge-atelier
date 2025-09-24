@@ -3,8 +3,12 @@ import { Link } from "react-router-dom";
 import { 
   Home, Fingerprint, Layout, BarChart3, Zap, 
   Headphones, Users, Settings, Plus, Eye, EyeOff, 
-  Edit, Trash2, MoreHorizontal 
+  Edit, Trash2, Calendar, Target
 } from "lucide-react";
+import EngagementStreaks from "@/components/EngagementStreaks";
+import TemplatesGallery from "@/components/TemplatesGallery";
+import CommunityPortal from "@/components/CommunityPortal";
+import ActivityTimeline from "@/components/ActivityTimeline";
 
 interface Fingerprint {
   id: string;
@@ -40,11 +44,13 @@ const Dashboard = () => {
   const sidebarItems = [
     { id: "overview", label: "Overview", icon: Home },
     { id: "fingerprints", label: "Fingerprints", icon: Fingerprint },
-    { id: "templates", label: "Templates", icon: Layout },
+    { id: "templates", label: "Templates Gallery", icon: Layout },
     { id: "analytics", label: "Analytics", icon: BarChart3 },
+    { id: "streaks", label: "Engagement Streaks", icon: Target },
+    { id: "timeline", label: "Activity Timeline", icon: Calendar },
     { id: "impact", label: "Moments of Impact", icon: Zap },
     { id: "concierge", label: "Concierge", icon: Headphones },
-    { id: "community", label: "Community", icon: Users },
+    { id: "community", label: "Community Portal", icon: Users },
     { id: "settings", label: "Settings", icon: Settings },
   ];
 
@@ -59,6 +65,38 @@ const Dashboard = () => {
   const deleteFingerprintMock = (id: string) => {
     setFingerprints(prev => prev.filter(fp => fp.id !== id));
   };
+
+  // Mock user milestones and activities
+  const userActivity = [
+    {
+      id: "1",
+      type: "success" as const,
+      title: "Fingerprint published",
+      description: "Portfolio Showcase went live and gained 50 visitors",
+      timestamp: "2 hours ago"
+    },
+    {
+      id: "2",
+      type: "highlight" as const,
+      title: "Engagement milestone",
+      description: "Reached 1K total visitors across all fingerprints",
+      timestamp: "1 day ago"
+    },
+    {
+      id: "3",
+      type: "info" as const,
+      title: "Template updated",
+      description: "Applied new luxury theme to Client Gallery",
+      timestamp: "2 days ago"
+    },
+    {
+      id: "4",
+      type: "success" as const,
+      title: "Client inquiry",
+      description: "New business inquiry received via contact form",
+      timestamp: "3 days ago"
+    }
+  ];
 
   return (
     <div className="min-h-screen flex bg-canvas-dark">
@@ -271,30 +309,64 @@ const Dashboard = () => {
             </div>
           )}
 
-          {/* Templates Section */}
-          {activeSection === "templates" && (
-            <div className="space-y-8">
-              <h2 className="text-3xl font-headline font-bold text-luxury">Template Gallery</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {["Luxury Portfolio", "Minimalist Showcase", "Creative Studio"].map((template, index) => (
-                  <div key={index} className="glass-card cursor-pointer hover:scale-105 transition-transform">
-                    <div className="h-40 bg-gradient-to-br from-neon-blue/20 to-luxury-purple/20 rounded-lg mb-4"></div>
-                    <h3 className="text-xl font-semibold text-foreground mb-2">{template}</h3>
-                    <p className="text-muted-foreground text-sm">Professional template for {template.toLowerCase()}</p>
+          {/* Templates Gallery Section */}
+          {activeSection === "templates" && <TemplatesGallery />}
+
+          {/* Engagement Streaks Section */}
+          {activeSection === "streaks" && <EngagementStreaks />}
+
+          {/* Activity Timeline Section */}
+          {activeSection === "timeline" && (
+            <ActivityTimeline events={userActivity} variant="user" />
+          )}
+
+          {/* Community Portal Section */}
+          {activeSection === "community" && <CommunityPortal />}
+
+          {/* Enhanced Concierge Section */}
+          {activeSection === "concierge" && (
+            <div className="space-y-6">
+              <h2 className="text-3xl font-headline font-bold text-neon">Digital Concierge</h2>
+              
+              <div className="glass-card">
+                <h3 className="text-xl font-headline font-bold text-foreground mb-4">
+                  Personalized Recommendations
+                </h3>
+                <div className="space-y-4">
+                  <div className="glass p-4 rounded-lg">
+                    <h4 className="font-semibold text-foreground mb-2">SEO Optimization</h4>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      Your Portfolio Showcase could benefit from meta description updates
+                    </p>
+                    <button className="text-sm text-neon-blue hover:underline">Fix now →</button>
                   </div>
-                ))}
+                  <div className="glass p-4 rounded-lg">
+                    <h4 className="font-semibold text-foreground mb-2">Performance Boost</h4>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      Compress images to improve loading speed by 23%
+                    </p>
+                    <button className="text-sm text-neon-blue hover:underline">Optimize →</button>
+                  </div>
+                  <div className="glass p-4 rounded-lg">
+                    <h4 className="font-semibold text-foreground mb-2">Engagement Enhancement</h4>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      Add social proof elements to increase visitor trust
+                    </p>
+                    <button className="text-sm text-neon-blue hover:underline">Add elements →</button>
+                  </div>
+                </div>
               </div>
             </div>
           )}
 
           {/* Other sections would be implemented similarly */}
-          {activeSection !== "overview" && activeSection !== "templates" && (
+          {!["overview", "templates", "streaks", "timeline", "community", "concierge"].includes(activeSection) && (
             <div className="glass-card text-center">
               <h2 className="text-3xl font-headline font-bold text-luxury mb-4">
                 {sidebarItems.find(item => item.id === activeSection)?.label}
               </h2>
               <p className="text-muted-foreground">
-                This section is under development. Stay tuned for updates.
+                This section is under development. Enhanced features coming soon.
               </p>
             </div>
           )}

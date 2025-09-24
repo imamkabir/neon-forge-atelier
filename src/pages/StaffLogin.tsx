@@ -12,7 +12,7 @@ const StaffLogin = () => {
     e.preventDefault();
     // Simulate staff login
     setTimeout(() => {
-      navigate("/dashboard");
+      navigate("/staff/dashboard");
     }, 1000);
   };
 
