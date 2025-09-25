@@ -14,6 +14,7 @@ import Dashboard from "./pages/Dashboard";
 import StaffDashboard from "./pages/StaffDashboard";
 import CEOLogin from "./pages/CEOLogin";
 import CEODashboard from "./pages/CEODashboard";
+import PublishedSite from "./components/PublishedSite";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/staff/dashboard" element={<StaffDashboard />} />
           <Route path="/ceo/dashboard" element={<CEODashboard />} />
+          <Route path="/s/:slug" element={<PublishedSite />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

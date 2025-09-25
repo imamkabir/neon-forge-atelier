@@ -3,12 +3,16 @@ import { Link } from "react-router-dom";
 import { 
   Home, Fingerprint, Layout, BarChart3, Zap, 
   Headphones, Users, Settings, Plus, Eye, EyeOff, 
-  Edit, Trash2, Calendar, Target
+  Edit, Trash2, Calendar, Target, Globe
 } from "lucide-react";
 import EngagementStreaks from "@/components/EngagementStreaks";
 import TemplatesGallery from "@/components/TemplatesGallery";
 import CommunityPortal from "@/components/CommunityPortal";
 import ActivityTimeline from "@/components/ActivityTimeline";
+import DigitalFingerprintCard from "@/components/DigitalFingerprintCard";
+import SiteEditor from "@/components/SiteEditor";
+import { toast } from "sonner";
+import { getUserSiteLimit } from "@/data/templates";
 
 interface Fingerprint {
   id: string;
@@ -16,13 +20,21 @@ interface Fingerprint {
   status: "active" | "draft";
   visits: number;
   lastModified: string;
+  template: string;
+  slug: string;
 }
 
 const Dashboard = () => {
   const [activeSection, setActiveSection] = useState("overview");
-  const [userName] = useState("Alex"); // Mock user name
+  const [userName] = useState("Alex Chen"); // Mock user name
   const [currentTime] = useState(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
   const [currentCity] = useState("New York"); // Mock location
+  const [userPlan] = useState("Free"); // Mock user plan
+  const [sitesCreatedThisMonth] = useState(3); // Mock usage
+  const [editingTemplateId, setEditingTemplateId] = useState<string | null>(null);
+  const [editingSiteId, setEditingSiteId] = useState<string | null>(null);
+  const [showCreateSiteModal, setShowCreateSiteModal] = useState(false);
+  const [newSiteName, setNewSiteName] = useState("");
   
   const [fingerprints, setFingerprints] = useState<Fingerprint[]>([
     {
@@ -30,14 +42,27 @@ const Dashboard = () => {
       name: "Portfolio Showcase",
       status: "active",
       visits: 1247,
-      lastModified: "2 hours ago"
+      lastModified: "2 hours ago",
+      template: "luxury-portfolio",
+      slug: "portfolio-showcase"
     },
     {
       id: "2", 
       name: "Client Gallery",
       status: "draft",
       visits: 0,
-      lastModified: "1 day ago"
+      lastModified: "1 day ago",
+      template: "minimal-showcase",
+      slug: "client-gallery"
+    },
+    {
+      id: "3", 
+      name: "Business Site",
+      status: "active",
+      visits: 524,
+      lastModified: "3 days ago",
+      template: "corporate-executive",
+      slug: "business-site"
     },
   ]);
 
@@ -64,6 +89,68 @@ const Dashboard = () => {
 
   const deleteFingerprintMock = (id: string) => {
     setFingerprints(prev => prev.filter(fp => fp.id !== id));
+    toast("Site deleted successfully");
+  };
+
+  const handleSelectTemplate = (templateId: string) => {
+    const siteLimit = getUserSiteLimit(userPlan);
+    if (siteLimit !== -1 && sitesCreatedThisMonth >= siteLimit) {
+      toast("You've reached your monthly site limit. Upgrade to create more sites!");
+      return;
+    }
+    setEditingTemplateId(templateId);
+    setShowCreateSiteModal(true);
+  };
+
+  const handleCreateSite = () => {
+    if (!newSiteName.trim()) {
+      toast("Please enter a site name");
+      return;
+    }
+
+    const newSite: Fingerprint = {
+      id: Date.now().toString(),
+      name: newSiteName,
+      status: "draft",
+      visits: 0,
+      lastModified: "now",
+      template: editingTemplateId || "luxury-portfolio",
+      slug: newSiteName.toLowerCase().replace(/\s+/g, '-')
+    };
+
+    setFingerprints(prev => [...prev, newSite]);
+    setEditingSiteId(newSite.id);
+    setShowCreateSiteModal(false);
+    setNewSiteName("");
+    toast("New site created! Opening editor...");
+  };
+
+  const handleEditSite = (siteId: string) => {
+    const site = fingerprints.find(fp => fp.id === siteId);
+    if (site) {
+      setEditingTemplateId(site.template);
+      setEditingSiteId(siteId);
+    }
+  };
+
+  const handleSaveSite = (siteData: any) => {
+    setFingerprints(prev => prev.map(fp => 
+      fp.id === editingSiteId 
+        ? { ...fp, ...siteData, lastModified: "now" }
+        : fp
+    ));
+    setEditingTemplateId(null);
+    setEditingSiteId(null);
+  };
+
+  // Mock user fingerprint data
+  const userFingerprintData = {
+    userName: userName,
+    fingerprintNumber: "NTC-2025-8849-VX",
+    planLevel: userPlan as "Free" | "Pro" | "Enterprise",
+    dateCreated: "Jan 2025",
+    badges: ["First Site", "Active Creator", "Community Member"],
+    verificationCode: "NTC-8849-VX"
   };
 
   // Mock user milestones and activities
@@ -97,6 +184,25 @@ const Dashboard = () => {
       timestamp: "3 days ago"
     }
   ];
+
+  // If editing a site, show the site editor
+  if (editingTemplateId && editingSiteId) {
+    const site = fingerprints.find(fp => fp.id === editingSiteId);
+    if (site) {
+      return (
+        <SiteEditor
+          templateId={editingTemplateId}
+          siteId={editingSiteId}
+          siteName={site.name}
+          onBack={() => {
+            setEditingTemplateId(null);
+            setEditingSiteId(null);
+          }}
+          onSave={handleSaveSite}
+        />
+      );
+    }
+  }
 
   return (
     <div className="min-h-screen flex bg-canvas-dark">
@@ -148,6 +254,37 @@ const Dashboard = () => {
           {/* Overview Section */}
           {activeSection === "overview" && (
             <div className="space-y-8">
+              {/* Digital Fingerprint Card */}
+              <div className="mb-8">
+                <h2 className="text-2xl font-headline font-bold text-neon mb-6">
+                  Your Digital Identity
+                </h2>
+                <DigitalFingerprintCard {...userFingerprintData} />
+              </div>
+              
+              {/* Usage Stats */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="glass-card text-center">
+                  <div className="text-3xl font-bold text-neon-blue mb-2">{sitesCreatedThisMonth}</div>
+                  <div className="text-sm text-muted-foreground">Sites this month</div>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    {getUserSiteLimit(userPlan) === -1 ? "Unlimited" : `${sitesCreatedThisMonth}/${getUserSiteLimit(userPlan)} used`}
+                  </div>
+                </div>
+                <div className="glass-card text-center">
+                  <div className="text-3xl font-bold text-luxury-periwinkle mb-2">
+                    {fingerprints.filter(fp => fp.status === "active").length}
+                  </div>
+                  <div className="text-sm text-muted-foreground">Live sites</div>
+                </div>
+                <div className="glass-card text-center">
+                  <div className="text-3xl font-bold text-accent-red mb-2">
+                    {fingerprints.reduce((total, fp) => total + fp.visits, 0).toLocaleString()}
+                  </div>
+                  <div className="text-sm text-muted-foreground">Total visits</div>
+                </div>
+              </div>
+
               {/* Digital Concierge */}
               <div className="glass-card">
                 <h2 className="text-2xl font-headline font-bold text-neon mb-4">
@@ -178,7 +315,10 @@ const Dashboard = () => {
                   <h2 className="text-2xl font-headline font-bold text-neon">
                     Your Fingerprints
                   </h2>
-                  <button className="btn-neon text-sm">
+                  <button 
+                    onClick={() => setActiveSection("templates")}
+                    className="btn-neon text-sm"
+                  >
                     <Plus className="w-4 h-4 mr-2" />
                     Create New
                   </button>
@@ -200,7 +340,10 @@ const Dashboard = () => {
                               <EyeOff className="w-4 h-4 text-muted-foreground" />
                             )}
                           </button>
-                          <button className="p-1 hover:bg-white/10 rounded transition-colors">
+                          <button 
+                            onClick={() => handleEditSite(fp.id)}
+                            className="p-1 hover:bg-white/10 rounded transition-colors"
+                          >
                             <Edit className="w-4 h-4 text-muted-foreground" />
                           </button>
                           <button 
@@ -215,15 +358,31 @@ const Dashboard = () => {
                       <div className="space-y-2">
                         <div className="flex justify-between">
                           <span className="text-sm text-muted-foreground">Status</span>
-                          <span className={`text-sm font-medium ${
-                            fp.status === "active" ? "text-neon-blue" : "text-muted-foreground"
-                          }`}>
-                            {fp.status === "active" ? "Live" : "Draft"}
-                          </span>
+                          <div className="flex items-center space-x-2">
+                            <span className={`text-sm font-medium ${
+                              fp.status === "active" ? "text-neon-blue" : "text-muted-foreground"
+                            }`}>
+                              {fp.status === "active" ? "Live" : "Draft"}
+                            </span>
+                            {fp.status === "active" && (
+                              <button
+                                onClick={() => window.open(`/s/${fp.slug}`, '_blank')}
+                                className="p-1 hover:bg-white/10 rounded transition-colors"
+                              >
+                                <Globe className="w-3 h-3 text-neon-blue" />
+                              </button>
+                            )}
+                          </div>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-sm text-muted-foreground">Visits</span>
                           <span className="text-sm font-medium text-foreground">{fp.visits.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-muted-foreground">Template</span>
+                          <span className="text-sm font-medium text-foreground capitalize">
+                            {fp.template.replace('-', ' ')}
+                          </span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-sm text-muted-foreground">Modified</span>
@@ -310,7 +469,19 @@ const Dashboard = () => {
           )}
 
           {/* Templates Gallery Section */}
-          {activeSection === "templates" && <TemplatesGallery />}
+          {activeSection === "templates" && (
+            <div>
+              <div className="mb-6">
+                <h2 className="text-3xl font-headline font-bold text-neon mb-2">
+                  Templates Gallery
+                </h2>
+                <p className="text-muted-foreground">
+                  Choose from our curated collection of 7 premium templates
+                </p>
+              </div>
+              <TemplatesGallery onSelectTemplate={handleSelectTemplate} />
+            </div>
+          )}
 
           {/* Engagement Streaks Section */}
           {activeSection === "streaks" && <EngagementStreaks />}
@@ -372,6 +543,49 @@ const Dashboard = () => {
           )}
         </div>
       </div>
+
+      {/* Create Site Modal */}
+      {showCreateSiteModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="glass-card max-w-md w-full">
+            <h3 className="text-xl font-headline font-bold text-neon mb-4">
+              Create New Site
+            </h3>
+            <p className="text-sm text-muted-foreground mb-6">
+              Give your new site a name to get started
+            </p>
+            
+            <input
+              type="text"
+              value={newSiteName}
+              onChange={(e) => setNewSiteName(e.target.value)}
+              placeholder="My Awesome Site"
+              className="w-full p-3 bg-canvas-elevated border border-primary/20 rounded-lg text-foreground mb-6"
+              onKeyDown={(e) => e.key === 'Enter' && handleCreateSite()}
+              autoFocus
+            />
+            
+            <div className="flex space-x-3">
+              <button
+                onClick={() => {
+                  setShowCreateSiteModal(false);
+                  setNewSiteName("");
+                  setEditingTemplateId(null);
+                }}
+                className="flex-1 btn-glass"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleCreateSite}
+                className="flex-1 btn-neon"
+              >
+                Create Site
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

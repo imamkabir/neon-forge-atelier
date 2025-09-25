@@ -1,79 +1,37 @@
 import { useState } from "react";
-import { Layout, Star, Eye, Download, ArrowRight } from "lucide-react";
+import { Layout, Star, Eye, Download, ArrowRight, Plus } from "lucide-react";
+import { NEON_TEMPLATES } from "@/data/templates";
+import { toast } from "sonner";
 
-interface Template {
-  id: string;
-  name: string;
-  category: string;
-  description: string;
-  thumbnail: string;
-  rating: number;
-  downloads: number;
-  isPremium: boolean;
-  tags: string[];
+interface TemplatesGalleryProps {
+  onSelectTemplate?: (templateId: string) => void;
 }
 
-const TemplatesGallery = () => {
+const TemplatesGallery = ({ onSelectTemplate }: TemplatesGalleryProps) => {
   const [selectedCategory, setSelectedCategory] = useState("all");
-  
-  const templates: Template[] = [
-    {
-      id: "1",
-      name: "Luxury Portfolio Pro",
-      category: "portfolio",
-      description: "Premium portfolio template with elegant animations",
-      thumbnail: "bg-gradient-to-br from-luxury-purple/20 to-luxury-lavender/20",
-      rating: 4.9,
-      downloads: 1247,
-      isPremium: true,
-      tags: ["luxury", "animation", "portfolio"]
-    },
-    {
-      id: "2", 
-      name: "Minimalist Showcase",
-      category: "showcase",
-      description: "Clean, minimal design for creative professionals",
-      thumbnail: "bg-gradient-to-br from-neon-blue/20 to-luxury-periwinkle/20",
-      rating: 4.7,
-      downloads: 892,
-      isPremium: false,
-      tags: ["minimal", "clean", "creative"]
-    },
-    {
-      id: "3",
-      name: "Corporate Executive",
-      category: "business",
-      description: "Professional template for business leaders",
-      thumbnail: "bg-gradient-to-br from-canvas-surface to-canvas-elevated",
-      rating: 4.8,
-      downloads: 634,
-      isPremium: true,
-      tags: ["business", "professional", "executive"]
-    },
-    {
-      id: "4",
-      name: "Creative Studio",
-      category: "creative",
-      description: "Bold, expressive template for artists and designers",
-      thumbnail: "bg-gradient-to-br from-accent-red/20 to-luxury-purple/20", 
-      rating: 4.6,
-      downloads: 756,
-      isPremium: false,
-      tags: ["creative", "bold", "artistic"]
-    }
-  ];
 
   const categories = [
     { id: "all", label: "All Templates" },
     { id: "portfolio", label: "Portfolio" },
     { id: "showcase", label: "Showcase" },
     { id: "business", label: "Business" },
-    { id: "creative", label: "Creative" }
+    { id: "creative", label: "Creative" },
+    { id: "hospitality", label: "Hospitality" },
+    { id: "technology", label: "Technology" },
+    { id: "personal", label: "Personal" }
   ];
 
   const filteredTemplates = selectedCategory === "all" 
-    ? templates 
-    : templates.filter(t => t.category === selectedCategory);
+    ? NEON_TEMPLATES 
+    : NEON_TEMPLATES.filter(t => t.category === selectedCategory);
+
+  const handleUseTemplate = (templateId: string) => {
+    if (onSelectTemplate) {
+      onSelectTemplate(templateId);
+    } else {
+      toast("Creating new site with this template...");
+    }
+  };
 
   return (
     <div className="glass-card">
@@ -158,8 +116,12 @@ const TemplatesGallery = () => {
                     <span className="text-sm text-muted-foreground">{template.downloads.toLocaleString()}</span>
                   </div>
                 </div>
-                <button className="text-sm text-neon-blue hover:underline font-medium">
-                  Use Template
+                <button 
+                  onClick={() => handleUseTemplate(template.id)}
+                  className="text-sm text-neon-blue hover:underline font-medium flex items-center space-x-1"
+                >
+                  <Plus className="w-3 h-3" />
+                  <span>Use Template</span>
                 </button>
               </div>
             </div>
