@@ -4,6 +4,7 @@ import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useSocialStore } from "@/store/socialStore";
 
 interface FormData {
   name: string;
@@ -13,6 +14,7 @@ interface FormData {
 }
 
 const Contact = () => {
+  const { submitContactForm } = useSocialStore();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -48,6 +50,14 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Submit to store for CEO/Staff dashboard visibility
+    submitContactForm({
+      name: formData.name,
+      email: formData.email,
+      purpose: formData.purpose,
+      message: formData.message
+    });
     
     // Simulate form submission
     setTimeout(() => {

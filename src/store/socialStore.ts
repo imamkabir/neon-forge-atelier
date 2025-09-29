@@ -40,6 +40,27 @@ export interface Message {
   read: boolean;
 }
 
+export interface ContactSubmission {
+  id: string;
+  name: string;
+  email: string;
+  purpose: string[];
+  message: string;
+  timestamp: string;
+  status: 'new' | 'read' | 'responded';
+  assignedTo?: string;
+}
+
+export interface AdminMessage {
+  id: string;
+  sender: 'ceo' | 'staff';
+  senderName: string;
+  content: string;
+  timestamp: string;
+  priority: 'normal' | 'high' | 'urgent';
+  department?: string;
+}
+
 export interface SocialState {
   currentUser: User | null;
   users: User[];
@@ -48,6 +69,8 @@ export interface SocialState {
   followedUsers: Set<string>;
   likedPosts: Set<string>;
   trendingHashtags: string[];
+  contactSubmissions: ContactSubmission[];
+  adminMessages: AdminMessage[];
   
   // Actions
   setCurrentUser: (user: User) => void;
@@ -58,6 +81,8 @@ export interface SocialState {
   createPost: (content: string, hashtags: string[], images?: string[]) => void;
   sendMessage: (receiverId: string, content: string) => void;
   markMessageAsRead: (messageId: string) => void;
+  submitContactForm: (submission: Omit<ContactSubmission, 'id' | 'timestamp' | 'status'>) => void;
+  sendAdminMessage: (content: string, priority?: 'normal' | 'high' | 'urgent') => void;
 }
 
 // Mock data
@@ -144,6 +169,18 @@ const mockPosts: Post[] = [
   }
 ];
 
+const mockContactSubmissions: ContactSubmission[] = [
+  {
+    id: '1',
+    name: 'Alexandra Rodriguez',
+    email: 'alex@techstartup.com',
+    purpose: ['Digital Flagship', 'Brand Identity'],
+    message: 'Hi, I\'m the founder of a tech startup and I\'m looking for a premium digital presence that matches our innovative approach.',
+    timestamp: new Date(Date.now() - 1800000).toISOString(),
+    status: 'new'
+  }
+];
+
 export const useSocialStore = create<SocialState>((set, get) => ({
   currentUser: mockUsers[0], // Simulate logged in user
   users: mockUsers,
@@ -152,6 +189,8 @@ export const useSocialStore = create<SocialState>((set, get) => ({
   followedUsers: new Set(['2', '3']),
   likedPosts: new Set(['2']),
   trendingHashtags: ['#neon', '#digitalidentity', '#luxury', '#tech', '#future', '#business', '#design'],
+  contactSubmissions: mockContactSubmissions,
+  adminMessages: [],
 
   setCurrentUser: (user) => set({ currentUser: user }),
 
@@ -260,5 +299,34 @@ export const useSocialStore = create<SocialState>((set, get) => ({
         ? { ...message, read: true }
         : message
     )
-  }))
+  })),
+
+  submitContactForm: (submission) => set((state) => {
+    const newSubmission: ContactSubmission = {
+      ...submission,
+      id: Date.now().toString(),
+      timestamp: new Date().toISOString(),
+      status: 'new'
+    };
+    
+    return { 
+      contactSubmissions: [newSubmission, ...state.contactSubmissions] 
+    };
+  }),
+
+  sendAdminMessage: (content, priority = 'normal') => set((state) => {
+    if (!state.currentUser) return state;
+    
+    const newMessage: AdminMessage = {
+      id: Date.now().toString(),
+      sender: state.currentUser.isCEO ? 'ceo' : 'staff',
+      senderName: state.currentUser.name,
+      content,
+      timestamp: new Date().toISOString(),
+      priority,
+      department: state.currentUser.isCEO ? undefined : 'Operations'
+    };
+    
+    return { adminMessages: [...state.adminMessages, newMessage] };
+  })
 }));

@@ -17,24 +17,24 @@ const BreathingDots = ({ count = 50, className = "" }: BreathingDotsProps) => {
     dots.forEach((dot, index) => {
       // Breathing animation
       gsap.to(dot, {
-        scale: "random(0.8, 1.4)",
-        opacity: "random(0.3, 0.8)",
-        duration: "random(3, 6)",
+        scale: "random(0.6, 1.2)",
+        opacity: "random(0.2, 0.6)",
+        duration: "random(4, 8)",
         repeat: -1,
         yoyo: true,
         ease: "power2.inOut",
-        delay: index * 0.1
+        delay: index * 0.05
       });
 
       // Slow floating movement
       gsap.to(dot, {
-        x: "random(-50, 50)",
-        y: "random(-50, 50)",
-        duration: "random(20, 40)",
+        x: "random(-30, 30)",
+        y: "random(-30, 30)",
+        duration: "random(25, 45)",
         repeat: -1,
         yoyo: true,
         ease: "none",
-        delay: "random(0, 10)"
+        delay: "random(0, 15)"
       });
     });
 
@@ -51,11 +51,11 @@ const BreathingDots = ({ count = 50, className = "" }: BreathingDotsProps) => {
       {Array.from({ length: count }).map((_, i) => (
         <div
           key={i}
-          className="breathing-dot absolute w-2 h-2 bg-white rounded-full opacity-40"
+          className="breathing-dot absolute w-1 h-1 bg-white rounded-full opacity-30"
           style={{
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
-            filter: 'blur(0.5px)',
+            filter: 'blur(0.3px)',
           }}
         />
       ))}

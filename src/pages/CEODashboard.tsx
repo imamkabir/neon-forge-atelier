@@ -4,11 +4,13 @@ import {
   Crown, BarChart3, Users, Shield, Zap, 
   Settings, TrendingUp, Globe, DollarSign,
   UserCheck, AlertTriangle, Activity, Target,
-  Award, Briefcase, Eye, ToggleLeft, ToggleRight
+  Award, Briefcase, Eye, ToggleLeft, ToggleRight,
+  MessageSquare, Mail
 } from "lucide-react";
 import PortalSidebar from "@/components/PortalSidebar";
 import StatsCard from "@/components/StatsCard";
 import ActivityTimeline from "@/components/ActivityTimeline";
+import CEOMessagingCenter from "@/components/CEOMessagingCenter";
 
 interface StaffMember {
   id: string;
@@ -91,6 +93,7 @@ const CEODashboard = () => {
 
   const sidebarItems = [
     { id: "overview", label: "Executive Overview", icon: Crown },
+    { id: "messaging", label: "Command Center", icon: MessageSquare, badge: 3 },
     { id: "staff", label: "Staff Oversight", icon: Users, badge: staffMembers.length },
     { id: "analytics", label: "Strategic Analytics", icon: BarChart3 },
     { id: "community", label: "Community Health", icon: Globe },
@@ -281,6 +284,13 @@ const CEODashboard = () => {
             </div>
           )}
 
+          {/* CEO Messaging Center */}
+          {activeSection === "messaging" && (
+            <div className="h-[calc(100vh-12rem)]">
+              <CEOMessagingCenter />
+            </div>
+          )}
+
           {/* Staff Oversight Section */}
           {activeSection === "staff" && (
             <div className="space-y-6">
@@ -412,7 +422,7 @@ const CEODashboard = () => {
           )}
 
           {/* Other sections placeholder */}
-          {![ "overview", "staff", "features"].includes(activeSection) && (
+          {![ "overview", "messaging", "staff", "features"].includes(activeSection) && (
             <div className="glass-card text-center bg-gradient-to-br from-luxury-purple/10 to-luxury-lavender/10 border-luxury-lavender/20">
               <Crown className="w-16 h-16 text-luxury-lavender mx-auto mb-4 animate-glow" />
               <h2 className="text-3xl font-headline font-bold text-luxury mb-4">

@@ -10,7 +10,9 @@ import TemplatesGallery from "@/components/TemplatesGallery";
 import CommunityPortal from "@/components/CommunityPortal";
 import ActivityTimeline from "@/components/ActivityTimeline";
 import DigitalFingerprintCard from "@/components/DigitalFingerprintCard";
-import SiteEditor from "@/components/SiteEditor";
+import TemplateEditor from "@/components/TemplateEditor";
+import EnhancedSiteEditor from "@/components/EnhancedSiteEditor";
+import NeonFingerprintCard from "@/components/NeonFingerprintCard";
 import { toast } from "sonner";
 import { getUserSiteLimit } from "@/data/templates";
 
@@ -190,7 +192,7 @@ const Dashboard = () => {
     const site = fingerprints.find(fp => fp.id === editingSiteId);
     if (site) {
       return (
-        <SiteEditor
+        <EnhancedSiteEditor
           templateId={editingTemplateId}
           siteId={editingSiteId}
           siteName={site.name}
@@ -259,7 +261,17 @@ const Dashboard = () => {
                 <h2 className="text-2xl font-headline font-bold text-neon mb-6">
                   Your Digital Identity
                 </h2>
-                <DigitalFingerprintCard {...userFingerprintData} />
+                <NeonFingerprintCard 
+                  userName={userFingerprintData.userName}
+                  fingerprintNumber={userFingerprintData.fingerprintNumber}
+                  planLevel={userFingerprintData.planLevel}
+                  dateCreated={userFingerprintData.dateCreated}
+                  badges={userFingerprintData.badges}
+                  verificationCode={userFingerprintData.verificationCode}
+                  streak={15}
+                  showEditButton={true}
+                  onEdit={() => toast("Edit fingerprint functionality coming soon!")}
+                />
               </div>
               
               {/* Usage Stats */}

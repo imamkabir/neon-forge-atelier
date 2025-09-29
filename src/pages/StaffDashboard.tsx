@@ -2,13 +2,14 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { 
   Users, Layout, BarChart3, Headphones, 
-  MessageCircle, Settings, Shield, Search,
+  MessageCircle, Settings, Shield, Search, MessageSquare,
   Plus, Edit, Trash2, MoreHorizontal, Eye,
   UserCheck, UserX, RefreshCw, AlertTriangle
 } from "lucide-react";
 import PortalSidebar from "@/components/PortalSidebar";
 import StatsCard from "@/components/StatsCard";
 import ActivityTimeline from "@/components/ActivityTimeline";
+import StaffMessagingCenter from "@/components/StaffMessagingCenter";
 
 interface User {
   id: string;
@@ -84,6 +85,7 @@ const StaffDashboard = () => {
 
   const sidebarItems = [
     { id: "overview", label: "Overview", icon: BarChart3 },
+    { id: "messaging", label: "Team Chat", icon: MessageSquare, badge: 2 },
     { id: "users", label: "User Management", icon: Users, badge: users.length },
     { id: "fingerprints", label: "Fingerprint Oversight", icon: Layout },
     { id: "analytics", label: "Analytics Hub", icon: BarChart3 },
@@ -216,6 +218,13 @@ const StaffDashboard = () => {
 
               {/* Activity Timeline */}
               <ActivityTimeline events={recentActivity} variant="staff" />
+            </div>
+          )}
+
+          {/* Staff Messaging Center */}
+          {activeSection === "messaging" && (
+            <div className="h-[calc(100vh-12rem)]">
+              <StaffMessagingCenter />
             </div>
           )}
 
@@ -376,7 +385,7 @@ const StaffDashboard = () => {
           )}
 
           {/* Other sections placeholder */}
-          {!["overview", "users", "support"].includes(activeSection) && (
+          {!["overview", "messaging", "users", "support"].includes(activeSection) && (
             <div className="glass-card text-center">
               <h2 className="text-3xl font-headline font-bold text-neon mb-4">
                 {sidebarItems.find(item => item.id === activeSection)?.label}
