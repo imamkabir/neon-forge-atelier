@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { 
-  Home, Fingerprint, Layout, BarChart3, Zap, 
-  Headphones, Users, Settings, Plus, Eye, EyeOff, 
-  Edit, Trash2, Calendar, Target, Globe
-} from "lucide-react";
+import { Chrome as Home, Fingerprint, LayoutGrid as Layout, ChartBar as BarChart3, Zap, Headphones, Users, Settings, Plus, Eye, EyeOff, CreditCard as Edit, Trash2, Calendar, Target, Globe } from "lucide-react";
 import EngagementStreaks from "@/components/EngagementStreaks";
 import TemplatesGallery from "@/components/TemplatesGallery";
 import CommunityPortal from "@/components/CommunityPortal";

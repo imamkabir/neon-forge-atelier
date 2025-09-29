@@ -1,9 +1,5 @@
 import { useState } from "react";
-import { 
-  Save, Eye, Code, Palette, Type, Image, 
-  Plus, Trash2, ArrowLeft, Layout, Smartphone, 
-  Monitor, Tablet, Globe, Settings, Wand2, ExternalLink
-} from "lucide-react";
+import { Save, Eye, Code, Palette, Type, Image, Plus, Trash2, ArrowLeft, LayoutGrid as Layout, Smartphone, Monitor, Tablet, Globe, Settings, Wand as Wand2, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import { NEON_TEMPLATES, PREMIUM_FONTS } from "@/data/templates";
 import { Button } from "@/components/ui/button";

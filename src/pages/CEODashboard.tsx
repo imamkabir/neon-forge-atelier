@@ -1,12 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { 
-  Crown, BarChart3, Users, Shield, Zap, 
-  Settings, TrendingUp, Globe, DollarSign,
-  UserCheck, AlertTriangle, Activity, Target,
-  Award, Briefcase, Eye, ToggleLeft, ToggleRight,
-  MessageSquare, Mail
-} from "lucide-react";
+import { Crown, ChartBar as BarChart3, Users, Shield, Zap, Settings, TrendingUp, Globe, DollarSign, UserCheck, TriangleAlert as AlertTriangle, Activity, Target, Award, Briefcase, Eye, ToggleLeft, ToggleRight, MessageSquare, Mail } from "lucide-react";
 import PortalSidebar from "@/components/PortalSidebar";
 import StatsCard from "@/components/StatsCard";
 import ActivityTimeline from "@/components/ActivityTimeline";

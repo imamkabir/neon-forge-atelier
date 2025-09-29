@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Shield, Users, Bell, MessageSquare, AlertTriangle, CheckCircle } from "lucide-react";
+import { Send, Shield, Users, Bell, MessageSquare, TriangleAlert as AlertTriangle, CircleCheck as CheckCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";

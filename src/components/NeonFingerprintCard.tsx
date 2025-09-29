@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { CreditCard, Shield, Award, Calendar, Copy, Eye, EyeOff, Fingerprint, Zap, Globe, QrCode, Edit, ExternalLink } from "lucide-react";
+import { CreditCard, Shield, Award, Calendar, Copy, Eye, EyeOff, Fingerprint, Zap, Globe, QrCode, CreditCard as Edit, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 
 interface NeonFingerprintCardProps {

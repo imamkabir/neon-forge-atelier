@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { 
-  Users, Layout, BarChart3, Headphones, 
-  MessageCircle, Settings, Shield, Search, MessageSquare,
-  Plus, Edit, Trash2, MoreHorizontal, Eye,
-  UserCheck, UserX, RefreshCw, AlertTriangle
-} from "lucide-react";
+import { Users, LayoutGrid as Layout, ChartBar as BarChart3, Headphones, MessageCircle, Settings, Shield, Search, MessageSquare, Plus, CreditCard as Edit, Trash2, MoveHorizontal as MoreHorizontal, Eye, UserCheck, UserX, RefreshCw, TriangleAlert as AlertTriangle } from "lucide-react";
 import PortalSidebar from "@/components/PortalSidebar";
 import StatsCard from "@/components/StatsCard";
 import ActivityTimeline from "@/components/ActivityTimeline";
