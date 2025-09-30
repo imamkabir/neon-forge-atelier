@@ -1,73 +1,196 @@
-# Welcome to your Lovable project
+# Neon Tech Social+ Platform
 
-## Project info
+An investor-ready luxury social platform with integrated website builder, featuring obsessive attention to detail, cinematic motion, and addictive social features.
 
-**URL**: https://lovable.dev/projects/eb3f573d-b449-4eb5-9ca2-a822458dd7d0
+## 🚀 Quick Start
 
-## How can I edit this code?
+```bash
+# Install dependencies
+npm install
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/eb3f573d-b449-4eb5-9ca2-a822458dd7d0) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Open [http://localhost:8080](http://localhost:8080) to view the platform.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🎨 Design System
 
-**Use GitHub Codespaces**
+### Color Tokens
+```css
+--bg: #0B0B10 (charcoal background)
+--ink: #E9EDF5 (soft white text)
+--blue: #8CC5FF (ice blue glow - primary)
+--crimson: #FF5570 (subtle crimson accent)
+--violet: #838CE5 (cool violet haze)
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Typography
+- **Headings**: Playfair Display (luxury serif with tight tracking)
+- **Body/UI**: Inter (clean sans-serif with optical kerning)
+- **Mono**: JetBrains Mono (code and IDs)
 
-## What technologies are used for this project?
+### Glass System
+- **Glass**: `rgba(255,255,255,0.06)` with `blur(24px)`
+- **Glass Strong**: `rgba(255,255,255,0.08)` with enhanced borders
+- **Borders**: `rgba(255,255,255,0.12)`
 
-This project is built with:
+## 🏗️ Architecture
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Routes
+- `/` - Investor home with hero and teasers
+- `/about` - Minimal story (Problem → Spark → Philosophy)
+- `/services` - Interactive filmstrip of disciplines
+- `/feed` - Social feed with stories and posts
+- `/profile/:id` - User profiles with neon fingerprint cards
+- `/messages` - Luxury DM system
+- `/leaderboard` - Gamified creator rankings
+- `/templates` - Curated 7-template gallery
+- `/builder` - Mini-site builder wizard
+- `/dashboard` - User analytics with digital concierge
+- `/explore` - Discovery and trending content
+- `/referrals` - Refer & earn dashboard
 
-## How can I deploy this project?
+### Key Components
 
-Simply open [Lovable](https://lovable.dev/projects/eb3f573d-b449-4eb5-9ca2-a822458dd7d0) and click on Share -> Publish.
+#### Core UI
+- `AuraBackground` - Breathing white dots + ambient gradients
+- `NavBar` - Glass navigation with magnetic interactions
+- `PostCard` - Luxury social post with micro-interactions
+- `StoryReel` - Circular story cards with autoplay
+- `Composer` - Post creation with media support
 
-## Can I connect a custom domain to my Lovable project?
+#### Social Features
+- `ProfileHeader` - Enhanced user profiles with tier indicators
+- `NeonFingerprintCard` - AMEX-inspired digital ID cards
+- `LeaderboardTable` - Gamified rankings with confetti
+- `MessagingCenter` - WhatsApp-style luxury chat
 
-Yes, you can!
+#### Builder System
+- `TemplateGallery` - 7 curated templates with live previews
+- `BuilderWizard` - Guided form + developer mode
+- `LivePreview` - Real-time site preview with responsive modes
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+#### Analytics
+- `ConciergeBar` - AI-powered insights and recommendations
+- `ImpactCrate` - Gamified achievement reveals
+- `Timeline` - Interactive journey visualization
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## 📱 Features
+
+### Social Platform
+- **Stories**: Circular reels with ring glow and autoplay
+- **Posts**: Text, images, hashtags with engagement tracking
+- **Profiles**: Tier-based avatars with achievement badges
+- **Messages**: End-to-end encrypted luxury chat experience
+- **Leaderboard**: Global, weekly, and rising creator rankings
+
+### Website Builder
+- **7 Curated Templates**: Monolith, Atelier, Holo, Nova, Velvet, Kairo, Meridian
+- **Guided Mode**: Conversational form with live preview
+- **Developer Mode**: Raw code editor with JSON config
+- **Export**: Static HTML with Neon Tech watermark
+- **Responsive**: Mobile, tablet, desktop previews
+
+### Gamification
+- **Badges**: Neon Pioneer, Business Pro, Investor, Trendsetter
+- **Tiers**: Free, Pro, Enterprise with visual indicators
+- **Streaks**: Daily posting unlocks glow effects
+- **Scores**: Engagement-based ranking system
+
+### Analytics
+- **Digital Concierge**: Personalized insights and recommendations
+- **Performance Tracking**: Reach, engagement, growth metrics
+- **Journey Timeline**: Interactive milestone visualization
+- **Impact Moments**: Curated achievement highlights
+
+## 🎭 Motion Design
+
+### Animations
+- **Page Transitions**: Crossfade with Z-depth using Framer Motion
+- **Micro-interactions**: Magnetic buttons, parallax shadows
+- **Loading States**: Shimmer skeletons with white line effect
+- **Hover Effects**: Subtle lifts, glows, and scale transforms
+
+### Accessibility
+- **Reduced Motion**: `prefers-reduced-motion` guards on all animations
+- **Focus Management**: Custom focus rings with proper contrast
+- **Screen Readers**: Semantic HTML with proper ARIA labels
+- **Keyboard Navigation**: Full keyboard accessibility
+
+## 🔧 Development
+
+### Adding New Templates
+1. Add template config to `src/mock/templates.json`
+2. Include preview image, color palette, and typography
+3. Template will automatically appear in gallery
+
+### Adding New Badges
+1. Update user badges in `src/mock/users.json`
+2. Badge will automatically render with achievement styling
+
+### Exporting Sites
+Built sites include:
+- Responsive HTML/CSS/JS
+- Neon Tech watermark: `neonc©2025 — all rights reserved`
+- Optimized performance and SEO
+- Mobile-first responsive design
+
+## 🎯 Investor Demo Script (90 seconds)
+
+1. **Hero Landing** (15s)
+   - White dot completes headline animation
+   - Showcase luxury typography and spacing
+
+2. **Blueprint Room** (20s)
+   - Hover filmstrip disciplines
+   - Click into "Identity & Soul" case study
+   - Show killer client testimonial
+
+3. **Social Feed** (20s)
+   - Stories autoplay interaction
+   - Post engagement micro-interactions
+   - Follow user and see real-time updates
+
+4. **Profile & Fingerprint** (15s)
+   - View neon digital fingerprint card
+   - Show tier system and badges
+   - Demonstrate social proof
+
+5. **Builder Demo** (15s)
+   - Select template → change brand name/color
+   - Live preview updates
+   - Export to HTML with watermark
+
+6. **Dashboard Concierge** (5s)
+   - Show personalized insights
+   - Click "Impact Crate" reveal
+   - Demonstrate analytics depth
+
+## 🏆 Production Features
+
+### Performance
+- Code-split routes with lazy loading
+- Optimized images with modern formats
+- Minimal bundle size with tree shaking
+- 60fps animations with GPU acceleration
+
+### Security
+- XSS protection on user content
+- Secure file uploads (mocked)
+- Rate limiting on actions
+- Content moderation hooks
+
+### Scalability
+- Component-based architecture
+- Zustand state management
+- Mock data easily replaceable with APIs
+- Responsive design system
+
+## 📄 License
+
+© 2025 Neon Tech. All rights reserved.
+
+---
+
+*Built with obsessive attention to detail for investors who appreciate excellence.*
