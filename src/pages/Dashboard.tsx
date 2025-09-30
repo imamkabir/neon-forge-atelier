@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Sparkles, TrendingUp, Users, Target, Calendar, 
-  Eye, BarChart3, Zap, Crown, ArrowRight, Play
-} from "lucide-react";
+import { Sparkles, TrendingUp, Users, Target, Calendar, Eye, ChartBar as BarChart3, Zap, Crown, ArrowRight, Play } from "lucide-react";
 import NavBar from "@/components/NavBar";
 import AuraBackground from "@/components/AuraBackground";
 import usersData from "@/mock/users.json";

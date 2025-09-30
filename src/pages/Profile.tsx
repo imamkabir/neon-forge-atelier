@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  MessageCircle, Calendar, MapPin, Globe, 
-  Users, Heart, Repeat2, Share, MoreHorizontal,
-  UserPlus, UserCheck, Crown, Star, Award
-} from "lucide-react";
+import { MessageCircle, Calendar, MapPin, Globe, Users, Heart, Repeat2, Share, MoveHorizontal as MoreHorizontal, UserPlus, UserCheck, Crown, Star, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar } from "@/components/ui/avatar";

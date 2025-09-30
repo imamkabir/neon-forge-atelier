@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Heart, MessageCircle, Repeat2, Share, MoreHorizontal, MapPin } from "lucide-react";
+import { Heart, MessageCircle, Repeat2, Share, MoveHorizontal as MoreHorizontal, MapPin } from "lucide-react";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { formatDistanceToNow } from "date-fns";

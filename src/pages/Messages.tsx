@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Search, Send, Phone, Video, MoreHorizontal, 
-  Paperclip, Smile, Circle, ArrowLeft
-} from "lucide-react";
+import { Search, Send, Phone, Video, MoveHorizontal as MoreHorizontal, Paperclip, Smile, Circle, ArrowLeft } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
