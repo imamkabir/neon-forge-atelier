@@ -1,267 +1,398 @@
 import { useState } from "react";
-import { Search, Send, MoreHorizontal, Phone, Video } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { 
+  Search, Send, Phone, Video, MoreHorizontal, 
+  Paperclip, Smile, Circle, ArrowLeft
+} from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Avatar } from "@/components/ui/avatar";
 import NavBar from "@/components/NavBar";
-import BreathingDots from "@/components/BreathingDots";
-import { useSocialStore } from "@/store/socialStore";
+import AuraBackground from "@/components/AuraBackground";
+import usersData from "@/mock/users.json";
 import { formatDistanceToNow } from "date-fns";
 
+interface Message {
+  id: string;
+  senderId: string;
+  content: string;
+  timestamp: string;
+  type: "text" | "image" | "file";
+  read: boolean;
+}
+
+interface Conversation {
+  id: string;
+  user: typeof usersData[0];
+  lastMessage: Message;
+  unreadCount: number;
+  isOnline: boolean;
+}
+
 const Messages = () => {
-  const { users, messages, currentUser, sendMessage } = useSocialStore();
-  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+  const [selectedConversation, setSelectedConversation] = useState<string | null>(null);
   const [newMessage, setNewMessage] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Get conversations (mock data for demo)
-  const conversations = users
-    .filter(user => user.id !== currentUser?.id)
-    .map(user => {
-      const lastMessage = messages
-        .filter(msg => 
-          (msg.senderId === user.id && msg.receiverId === currentUser?.id) ||
-          (msg.senderId === currentUser?.id && msg.receiverId === user.id)
-        )
-        .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())[0];
+  // Mock conversations
+  const conversations: Conversation[] = usersData.slice(1).map((user, index) => ({
+    id: user.id,
+    user,
+    lastMessage: {
+      id: `msg-${index}`,
+      senderId: Math.random() > 0.5 ? user.id : "1",
+      content: [
+        "Hey! Love your latest post about digital identity 🔥",
+        "Thanks for the follow! Your work is incredible",
+        "Would love to collaborate on a project sometime",
+        "Just saw your feature in Design Letter - congrats!",
+        "Your template designs are absolutely stunning"
+      ][index % 5],
+      timestamp: new Date(Date.now() - Math.random() * 86400000).toISOString(),
+      type: "text",
+      read: Math.random() > 0.3
+    },
+    unreadCount: Math.floor(Math.random() * 3),
+    isOnline: Math.random() > 0.4
+  }));
 
-      return {
-        user,
-        lastMessage: lastMessage || {
-          id: 'mock',
-          senderId: user.id,
-          receiverId: currentUser?.id || '',
-          content: "Hey! How's your digital fingerprint coming along?",
-          timestamp: new Date(Date.now() - Math.random() * 86400000).toISOString(),
-          read: Math.random() > 0.3
-        },
-        unreadCount: Math.floor(Math.random() * 3)
-      };
-    })
-    .sort((a, b) => new Date(b.lastMessage.timestamp).getTime() - new Date(a.lastMessage.timestamp).getTime());
+  const selectedUser = conversations.find(c => c.id === selectedConversation)?.user;
 
-  const selectedUser = users.find(u => u.id === selectedUserId);
-  
-  const chatMessages = selectedUserId ? 
-    messages.filter(msg => 
-      (msg.senderId === selectedUserId && msg.receiverId === currentUser?.id) ||
-      (msg.senderId === currentUser?.id && msg.receiverId === selectedUserId)
-    ).sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
-    : [];
+  // Mock messages for selected conversation
+  const messages: Message[] = selectedConversation ? [
+    {
+      id: "1",
+      senderId: selectedConversation,
+      content: "Hey! I saw your latest project and I'm absolutely blown away by the attention to detail.",
+      timestamp: new Date(Date.now() - 3600000).toISOString(),
+      type: "text",
+      read: true
+    },
+    {
+      id: "2",
+      senderId: "1",
+      content: "Thank you so much! That means a lot coming from you. Your work has been a huge inspiration.",
+      timestamp: new Date(Date.now() - 3300000).toISOString(),
+      type: "text",
+      read: true
+    },
+    {
+      id: "3",
+      senderId: selectedConversation,
+      content: "Would love to collaborate on something together. I think our styles would complement each other perfectly.",
+      timestamp: new Date(Date.now() - 3000000).toISOString(),
+      type: "text",
+      read: true
+    },
+    {
+      id: "4",
+      senderId: "1",
+      content: "I'd love that! Let's set up a call this week to discuss some ideas.",
+      timestamp: new Date(Date.now() - 2700000).toISOString(),
+      type: "text",
+      read: true
+    }
+  ] : [];
 
-  const handleSendMessage = () => {
-    if (!newMessage.trim() || !selectedUserId) return;
-    
-    sendMessage(selectedUserId, newMessage);
+  const handleSendMessage = () =>  {
+    if (!newMessage.trim()) return;
+    // Mock sending message
     setNewMessage("");
   };
 
   const filteredConversations = conversations.filter(conv =>
     searchQuery === "" ||
     conv.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    conv.user.username.toLowerCase().includes(searchQuery.toLowerCase())
+    conv.user.handle.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
-    <div className="min-h-screen bg-background relative">
+    <AuraBackground variant="blue" intensity="subtle">
       <NavBar />
-      <BreathingDots />
       
-      <div className="relative z-10 pt-20">
-        <div className="container mx-auto px-4 max-w-7xl h-[calc(100vh-5rem)]">
+      <div className="pt-24 min-h-screen">
+        <div className="container mx-auto px-6 py-8 max-w-7xl h-[calc(100vh-8rem)]">
           
-          <div className="glass rounded-2xl overflow-hidden h-full flex">
+          <motion.div
+            className="glass rounded-3xl overflow-hidden h-full flex"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
             
             {/* Conversations Sidebar */}
-            <div className="w-80 border-r border-white/10 flex flex-col">
+            <div className={`${selectedConversation ? 'hidden lg:flex' : 'flex'} w-full lg:w-96 border-r border-white/10 flex-col`}>
               
               {/* Header */}
               <div className="p-6 border-b border-white/10">
-                <h1 className="text-2xl font-headline font-bold text-foreground mb-4">
+                <motion.h1
+                  className="text-2xl font-serif font-bold text-foreground mb-6"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
+                >
                   Messages
-                </h1>
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                </motion.h1>
+                
+                <motion.div
+                  className="relative"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.6 }}
+                >
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-foreground/40" />
                   <Input
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search conversations..."
-                    className="pl-10 bg-white/5 border-white/20"
+                    className="pl-12 glass border-white/20 bg-white/5"
                   />
-                </div>
+                </motion.div>
               </div>
               
               {/* Conversations List */}
               <ScrollArea className="flex-1">
-                <div className="p-2">
-                  {filteredConversations.map((conv) => (
-                    <div
-                      key={conv.user.id}
-                      onClick={() => setSelectedUserId(conv.user.id)}
-                      className={`p-4 rounded-xl cursor-pointer transition-all mb-2 ${
-                        selectedUserId === conv.user.id
-                          ? 'bg-neon-blue/20 border border-neon-blue/30'
+                <div className="p-4 space-y-2">
+                  {filteredConversations.map((conv, index) => (
+                    <motion.div
+                      key={conv.id}
+                      onClick={() => setSelectedConversation(conv.id)}
+                      className={`p-4 rounded-2xl cursor-pointer transition-all duration-300 group ${
+                        selectedConversation === conv.id
+                          ? 'bg-primary/20 border border-primary/30'
                           : 'hover:bg-white/5'
                       }`}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.4 + index * 0.05, duration: 0.4 }}
+                      whileHover={{ x: 4 }}
                     >
                       <div className="flex items-center space-x-3">
                         <div className="relative">
-                          <img
-                            src={conv.user.avatar}
-                            alt={conv.user.name}
-                            className="w-12 h-12 rounded-full"
-                          />
-                          <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-canvas-surface"></div>
+                          <Avatar className="w-12 h-12 ring-1 ring-white/20">
+                            <img src={conv.user.avatar} alt={conv.user.name} />
+                          </Avatar>
+                          {conv.isOnline && (
+                            <motion.div
+                              className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-background"
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ delay: 0.5 + index * 0.05, type: "spring" }}
+                            />
+                          )}
                         </div>
                         
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between mb-1">
-                            <h3 className="font-semibold text-foreground truncate">
+                            <h3 className="font-semibold text-foreground truncate group-hover:text-primary transition-colors">
                               {conv.user.name}
                             </h3>
-                            <span className="text-xs text-muted-foreground">
+                            <span className="text-xs text-foreground/50">
                               {formatDistanceToNow(new Date(conv.lastMessage.timestamp), { addSuffix: true })}
                             </span>
                           </div>
                           <div className="flex items-center justify-between">
-                            <p className="text-sm text-muted-foreground truncate">
+                            <p className="text-sm text-foreground/60 truncate">
                               {conv.lastMessage.content}
                             </p>
                             {conv.unreadCount > 0 && (
-                              <div className="w-5 h-5 bg-neon-blue rounded-full flex items-center justify-center">
-                                <span className="text-xs text-canvas-dark font-bold">
+                              <motion.div
+                                className="w-5 h-5 bg-primary rounded-full flex items-center justify-center ml-2"
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                transition={{ delay: 0.6 + index * 0.05, type: "spring" }}
+                              >
+                                <span className="text-xs text-white font-bold">
                                   {conv.unreadCount}
                                 </span>
-                              </div>
+                              </motion.div>
                             )}
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </ScrollArea>
             </div>
 
             {/* Chat Area */}
-            <div className="flex-1 flex flex-col">
+            <div className={`${selectedConversation ? 'flex' : 'hidden lg:flex'} flex-1 flex-col`}>
               
               {selectedUser ? (
                 <>
                   {/* Chat Header */}
                   <div className="p-6 border-b border-white/10 flex items-center justify-between">
                     <div className="flex items-center space-x-4">
-                      <img
-                        src={selectedUser.avatar}
-                        alt={selectedUser.name}
-                        className="w-12 h-12 rounded-full"
-                      />
+                      <button
+                        onClick={() => setSelectedConversation(null)}
+                        className="lg:hidden p-2 hover:bg-white/10 rounded-xl transition-colors"
+                      >
+                        <ArrowLeft className="w-5 h-5 text-foreground" />
+                      </button>
+                      
+                      <div className="relative">
+                        <Avatar className="w-12 h-12 ring-2 ring-primary/30">
+                          <img src={selectedUser.avatar} alt={selectedUser.name} />
+                        </Avatar>
+                        <motion.div
+                          className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-background"
+                          animate={{ scale: [1, 1.2, 1] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                        />
+                      </div>
+                      
                       <div>
-                        <h2 className="font-headline font-bold text-foreground">
+                        <h2 className="font-serif font-bold text-foreground">
                           {selectedUser.name}
                         </h2>
-                        <p className="text-sm text-muted-foreground">
-                          @{selectedUser.username} • Online
-                        </p>
+                        <div className="flex items-center space-x-2 text-sm text-foreground/60">
+                          <Circle className="w-2 h-2 fill-green-400 text-green-400" />
+                          <span>Online</span>
+                        </div>
                       </div>
                     </div>
                     
                     <div className="flex items-center space-x-2">
-                      <Button variant="ghost" size="icon">
-                        <Phone className="w-5 h-5" />
-                      </Button>
-                      <Button variant="ghost" size="icon">
-                        <Video className="w-5 h-5" />
-                      </Button>
-                      <Button variant="ghost" size="icon">
-                        <MoreHorizontal className="w-5 h-5" />
-                      </Button>
+                      <motion.button
+                        className="p-3 hover:bg-white/10 rounded-xl transition-colors"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <Phone className="w-5 h-5 text-foreground/60" />
+                      </motion.button>
+                      <motion.button
+                        className="p-3 hover:bg-white/10 rounded-xl transition-colors"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <Video className="w-5 h-5 text-foreground/60" />
+                      </motion.button>
+                      <motion.button
+                        className="p-3 hover:bg-white/10 rounded-xl transition-colors"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <MoreHorizontal className="w-5 h-5 text-foreground/60" />
+                      </motion.button>
                     </div>
                   </div>
 
                   {/* Messages */}
                   <ScrollArea className="flex-1 p-6">
-                    <div className="space-y-4">
-                      {chatMessages.length > 0 ? (
-                        chatMessages.map((msg) => (
-                          <div
-                            key={msg.id}
+                    <div className="space-y-6">
+                      <AnimatePresence>
+                        {messages.map((message, index) => (
+                          <motion.div
+                            key={message.id}
                             className={`flex ${
-                              msg.senderId === currentUser?.id ? 'justify-end' : 'justify-start'
+                              message.senderId === "1" ? 'justify-end' : 'justify-start'
                             }`}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1, duration: 0.4 }}
                           >
-                            <div
-                              className={`max-w-xs lg:max-w-md px-4 py-3 rounded-2xl ${
-                                msg.senderId === currentUser?.id
-                                  ? 'bg-neon-blue text-canvas-dark'
-                                  : 'bg-white/10 text-foreground'
+                            <motion.div
+                              className={`max-w-xs lg:max-w-md px-6 py-4 rounded-3xl ${
+                                message.senderId === "1"
+                                  ? 'bg-primary text-white'
+                                  : 'glass text-foreground'
                               }`}
+                              whileHover={{ scale: 1.02 }}
+                              transition={{ type: "spring", stiffness: 300 }}
                             >
-                              <p className="text-sm">{msg.content}</p>
-                              <p className={`text-xs mt-1 ${
-                                msg.senderId === currentUser?.id 
-                                  ? 'text-canvas-dark/70' 
-                                  : 'text-muted-foreground'
+                              <p className="text-sm leading-relaxed">{message.content}</p>
+                              <p className={`text-xs mt-2 ${
+                                message.senderId === "1" 
+                                  ? 'text-white/70' 
+                                  : 'text-foreground/50'
                               }`}>
-                                {formatDistanceToNow(new Date(msg.timestamp), { addSuffix: true })}
+                                {formatDistanceToNow(new Date(message.timestamp), { addSuffix: true })}
                               </p>
-                            </div>
-                          </div>
-                        ))
-                      ) : (
-                        <div className="text-center py-12">
-                          <div className="text-6xl mb-4 opacity-20">💬</div>
-                          <h3 className="text-xl font-headline font-bold text-foreground mb-2">
-                            Start a conversation
-                          </h3>
-                          <p className="text-muted-foreground">
-                            Send your first message to {selectedUser.name}
-                          </p>
-                        </div>
-                      )}
+                            </motion.div>
+                          </motion.div>
+                        ))}
+                      </AnimatePresence>
                     </div>
                   </ScrollArea>
 
                   {/* Message Input */}
                   <div className="p-6 border-t border-white/10">
                     <div className="flex items-center space-x-4">
-                      <Input
-                        value={newMessage}
-                        onChange={(e) => setNewMessage(e.target.value)}
-                        placeholder="Type a message..."
-                        className="flex-1 bg-white/5 border-white/20"
-                        onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                      />
-                      <Button
+                      <motion.button
+                        className="p-3 hover:bg-white/10 rounded-xl transition-colors"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <Paperclip className="w-5 h-5 text-foreground/60" />
+                      </motion.button>
+                      
+                      <div className="flex-1 relative">
+                        <Input
+                          value={newMessage}
+                          onChange={(e) => setNewMessage(e.target.value)}
+                          placeholder="Type a message..."
+                          className="glass border-white/20 bg-white/5 pr-12"
+                          onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                        />
+                        <motion.button
+                          className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 hover:bg-white/10 rounded-lg transition-colors"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                        >
+                          <Smile className="w-4 h-4 text-foreground/60" />
+                        </motion.button>
+                      </div>
+                      
+                      <motion.button
                         onClick={handleSendMessage}
                         disabled={!newMessage.trim()}
-                        size="icon"
-                        className="bg-neon-blue hover:bg-neon-blue/80 text-canvas-dark"
+                        className="btn-neon disabled:opacity-50 disabled:cursor-not-allowed"
+                        whileHover={{ scale: newMessage.trim() ? 1.05 : 1 }}
+                        whileTap={{ scale: newMessage.trim() ? 0.95 : 1 }}
                       >
-                        <Send className="w-5 h-5" />
-                      </Button>
+                        <Send className="w-4 h-4" />
+                      </motion.button>
                     </div>
                   </div>
                 </>
               ) : (
                 /* No Chat Selected */
                 <div className="flex-1 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-6xl mb-4 opacity-20">💬</div>
-                    <h2 className="text-2xl font-headline font-bold text-foreground mb-2">
+                  <motion.div
+                    className="text-center"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <motion.div
+                      className="w-24 h-24 bg-primary/20 rounded-3xl flex items-center justify-center mx-auto mb-6"
+                      animate={{ 
+                        boxShadow: [
+                          "0 0 20px rgba(140, 197, 255, 0.2)",
+                          "0 0 40px rgba(140, 197, 255, 0.4)",
+                          "0 0 20px rgba(140, 197, 255, 0.2)"
+                        ]
+                      }}
+                      transition={{ duration: 3, repeat: Infinity }}
+                    >
+                      <MessageCircle className="w-12 h-12 text-primary" />
+                    </motion.div>
+                    <h2 className="text-2xl font-serif font-bold text-foreground mb-4">
                       Select a conversation
                     </h2>
-                    <p className="text-muted-foreground">
-                      Choose from your existing conversations or start a new one
+                    <p className="text-foreground/60 max-w-md">
+                      Choose from your existing conversations or start a new one with fellow creators
                     </p>
-                  </div>
+                  </motion.div>
                 </div>
               )}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </div>
+    </AuraBackground>
   );
 };
 

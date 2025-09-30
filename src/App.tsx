@@ -3,27 +3,21 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+import PageTransition from "@/components/PageTransition";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import StaffLogin from "./pages/StaffLogin";
-import Dashboard from "./pages/Dashboard";
-import StaffDashboard from "./pages/StaffDashboard";
-import CEOLogin from "./pages/CEOLogin";
-import CEODashboard from "./pages/CEODashboard";
-import PublishedSite from "./components/PublishedSite";
 import Feed from "./pages/Feed";
-import Explore from "./pages/Explore";
-import FingerprintProfile from "./pages/FingerprintProfile";
-import Messages from "./pages/Messages";
 import Templates from "./pages/Templates";
-import AdminCEO from "./pages/AdminCEO";
-import AdminStaff from "./pages/AdminStaff";
-import AdminChat from "./pages/AdminChat";
-import NotFound from "./pages/NotFound";
+import Builder from "./pages/Builder";
+import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
+import Messages from "./pages/Messages";
+import Leaderboard from "./pages/Leaderboard";
+import Explore from "./pages/Explore";
+import Referrals from "./pages/Referrals";
 
 const queryClient = new QueryClient();
 
@@ -33,38 +27,23 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/login/staff" element={<StaffLogin />} />
-          <Route path="/login/ceo" element={<CEOLogin />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/staff/dashboard" element={<StaffDashboard />} />
-          <Route path="/ceo/dashboard" element={<CEODashboard />} />
-          
-          {/* Social Media Routes */}
-          <Route path="/feed" element={<Feed />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/fingerprints/:id" element={<FingerprintProfile />} />
-          <Route path="/messages" element={<Messages />} />
-          <Route path="/templates" element={<Templates />} />
-          
-          {/* Admin Routes */}
-          <Route path="/admin/ceo" element={<AdminCEO />} />
-          <Route path="/admin/staff" element={<AdminStaff />} />
-          <Route path="/admin/chat" element={<AdminChat />} />
-          
-          {/* Published Sites */}
-          <Route path="/s/:slug" element={<PublishedSite />} />
-          <Route path="/sites/:id" element={<PublishedSite />} />
-          
-          {/* Catch-all */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AnimatePresence mode="wait">
+          <Routes>
+            <Route path="/" element={<PageTransition><Index /></PageTransition>} />
+            <Route path="/about" element={<PageTransition><About /></PageTransition>} />
+            <Route path="/services" element={<PageTransition><Services /></PageTransition>} />
+            <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+            <Route path="/feed" element={<PageTransition><Feed /></PageTransition>} />
+            <Route path="/templates" element={<PageTransition><Templates /></PageTransition>} />
+            <Route path="/builder" element={<PageTransition><Builder /></PageTransition>} />
+            <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
+            <Route path="/profile/:id" element={<PageTransition><Profile /></PageTransition>} />
+            <Route path="/messages" element={<PageTransition><Messages /></PageTransition>} />
+            <Route path="/leaderboard" element={<PageTransition><Leaderboard /></PageTransition>} />
+            <Route path="/explore" element={<PageTransition><Explore /></PageTransition>} />
+            <Route path="/referrals" element={<PageTransition><Referrals /></PageTransition>} />
+          </Routes>
+        </AnimatePresence>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

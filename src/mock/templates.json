@@ -1,0 +1,149 @@
+[
+  {
+    "id": "monolith",
+    "name": "Monolith",
+    "vibe": "Architectural Minimalism",
+    "description": "Bold, structural design for visionaries who think in decades",
+    "preview": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&h=300&fit=crop",
+    "category": "business",
+    "tier": "Pro",
+    "config": {
+      "palette": {
+        "primary": "#0A0A0F",
+        "secondary": "#8CC5FF",
+        "accent": "#E9EDF5"
+      },
+      "typography": {
+        "heading": "Playfair Display",
+        "body": "Inter"
+      },
+      "layout": "minimal-grid"
+    }
+  },
+  {
+    "id": "atelier",
+    "name": "Atelier",
+    "vibe": "Artisan Craft",
+    "description": "For creators who value process as much as outcome",
+    "preview": "https://images.unsplash.com/photo-1618556450991-2f1af64e8191?w=400&h=300&fit=crop",
+    "category": "creative",
+    "tier": "Free",
+    "config": {
+      "palette": {
+        "primary": "#838CE5",
+        "secondary": "#0B0B10",
+        "accent": "#FF5570"
+      },
+      "typography": {
+        "heading": "Playfair Display",
+        "body": "Inter"
+      },
+      "layout": "masonry"
+    }
+  },
+  {
+    "id": "holo",
+    "name": "Holo",
+    "vibe": "Future Luxury",
+    "description": "Holographic elegance for the next generation of brands",
+    "preview": "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=400&h=300&fit=crop",
+    "category": "technology",
+    "tier": "Enterprise",
+    "config": {
+      "palette": {
+        "primary": "#8CC5FF",
+        "secondary": "#838CE5",
+        "accent": "#E9EDF5"
+      },
+      "typography": {
+        "heading": "Playfair Display",
+        "body": "Inter"
+      },
+      "layout": "floating-cards"
+    }
+  },
+  {
+    "id": "nova",
+    "name": "Nova",
+    "vibe": "Stellar Presence",
+    "description": "Radiant design for brands that illuminate their industry",
+    "preview": "https://images.unsplash.com/photo-1618556450994-a6a128ef0d9d?w=400&h=300&fit=crop",
+    "category": "portfolio",
+    "tier": "Pro",
+    "config": {
+      "palette": {
+        "primary": "#E9EDF5",
+        "secondary": "#0B0B10",
+        "accent": "#8CC5FF"
+      },
+      "typography": {
+        "heading": "Playfair Display",
+        "body": "Inter"
+      },
+      "layout": "hero-focus"
+    }
+  },
+  {
+    "id": "velvet",
+    "name": "Velvet",
+    "vibe": "Tactile Luxury",
+    "description": "Rich, textural design for premium lifestyle brands",
+    "preview": "https://images.unsplash.com/photo-1618556450991-2f1af64e8191?w=400&h=300&fit=crop",
+    "category": "luxury",
+    "tier": "Enterprise",
+    "config": {
+      "palette": {
+        "primary": "#FF5570",
+        "secondary": "#0B0B10",
+        "accent": "#838CE5"
+      },
+      "typography": {
+        "heading": "Playfair Display",
+        "body": "Inter"
+      },
+      "layout": "immersive"
+    }
+  },
+  {
+    "id": "kairo",
+    "name": "Kairo",
+    "vibe": "Timeless Elegance",
+    "description": "Classical proportions meet contemporary digital craft",
+    "preview": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400&h=300&fit=crop",
+    "category": "professional",
+    "tier": "Free",
+    "config": {
+      "palette": {
+        "primary": "#838CE5",
+        "secondary": "#E9EDF5",
+        "accent": "#8CC5FF"
+      },
+      "typography": {
+        "heading": "Playfair Display",
+        "body": "Inter"
+      },
+      "layout": "classic-grid"
+    }
+  },
+  {
+    "id": "meridian",
+    "name": "Meridian",
+    "vibe": "Global Reach",
+    "description": "For brands that transcend borders and connect cultures",
+    "preview": "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=400&h=300&fit=crop",
+    "category": "international",
+    "tier": "Pro",
+    "config": {
+      "palette": {
+        "primary": "#0B0B10",
+        "secondary": "#8CC5FF",
+        "accent": "#FF5570"
+      },
+      "typography": {
+        "heading": "Playfair Display",
+        "body": "Inter"
+      },
+      "layout": "split-screen"
+    }
+  }
+]

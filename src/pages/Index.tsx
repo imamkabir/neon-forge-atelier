@@ -1,273 +1,344 @@
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { ArrowRight, Play, Sparkles } from "lucide-react";
 import NavBar from "@/components/NavBar";
+import AuraBackground from "@/components/AuraBackground";
 import Footer from "@/components/Footer";
-import BigNBackground from "@/components/BigNBackground";
 
 const Index = () => {
-  const shapesRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
+  const [headlineComplete, setHeadlineComplete] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
 
   useEffect(() => {
-    // Animate geometric shapes
-    if (shapesRef.current) {
-      const shapes = shapesRef.current.querySelectorAll(".floating-shape");
-      shapes.forEach((shape, index) => {
-        gsap.to(shape, {
-          y: "random(-30, 30)",
-          x: "random(-20, 20)",
-          rotation: "random(-180, 180)",
-          duration: "random(8, 12)",
-          repeat: -1,
-          yoyo: true,
-          ease: "power2.inOut",
-          delay: index * 0.2,
-        });
-      });
-    }
+    // White dot completes headline animation
+    const timer = setTimeout(() => {
+      setHeadlineComplete(true);
+    }, 2000);
 
-    // Hero animation
-    if (heroRef.current) {
-      gsap.from(heroRef.current.children, {
-        y: 50,
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.2,
-        ease: "power3.out",
-        delay: 0.5,
-      });
-    }
+    return () => clearTimeout(timer);
   }, []);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 60, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
+
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <AuraBackground variant="blue" intensity="subtle">
       <NavBar />
-      <BigNBackground opacity={0.03} animated={true} />
-
-      {/* Floating Geometric Shapes */}
-      <div ref={shapesRef} className="absolute inset-0 pointer-events-none">
-        {[...Array(12)].map((_, i) => (
-          <div
-            key={i}
-            className={`floating-shape absolute ${
-              i % 3 === 0 ? "w-16 h-16" : i % 3 === 1 ? "w-12 h-12" : "w-8 h-8"
-            }`}
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-          >
-            {i % 4 === 0 && (
-              <div className="w-full h-full border-2 border-neon-blue/30 rotate-45"></div>
-            )}
-            {i % 4 === 1 && (
-              <div className="w-full h-full rounded-full border-2 border-luxury-periwinkle/30"></div>
-            )}
-            {i % 4 === 2 && (
-              <svg className="w-full h-full" viewBox="0 0 100 100">
-                <polygon
-                  points="50,5 95,85 5,85"
-                  fill="none"
-                  stroke="hsl(var(--luxury-lavender))"
-                  strokeWidth="2"
-                  opacity="0.3"
-                />
-              </svg>
-            )}
-            {i % 4 === 3 && (
-              <div className="w-full h-full">
-                <div className="w-full h-0.5 bg-accent-red/30 absolute top-1/2 left-0 transform -translate-y-1/2"></div>
-                <div className="h-full w-0.5 bg-accent-red/30 absolute left-1/2 top-0 transform -translate-x-1/2"></div>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-
+      
       {/* Hero Section */}
-      <section className="relative z-10 pt-24 min-h-screen flex items-center">
-        <div className="container mx-auto px-6">
-          <div ref={heroRef} className="max-w-4xl mx-auto text-center">
-            <h1 className="text-6xl md:text-8xl font-headline font-bold mb-8 text-luxury leading-tight">
-              Digital Fingerprints,{" "}
-              <span className="text-neon">Built for Velocity.</span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
-              Where precision meets artistry in the digital realm
-            </p>
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <motion.div style={{ y }} className="absolute inset-0 z-0">
+          <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-violet-500/4 rounded-full blur-3xl" />
+        </motion.div>
 
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <Link to="/register" className="btn-neon text-lg px-12 py-4">
-                Get Started
+        <motion.div
+          ref={heroRef}
+          className="relative z-10 text-center max-w-6xl mx-auto px-6"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.div variants={itemVariants} className="mb-8">
+            <motion.h1 
+              className="text-6xl md:text-8xl lg:text-9xl font-serif font-bold text-foreground leading-[0.9] tracking-tight"
+              style={{ fontFeatureSettings: '"ss01", "ss02"' }}
+            >
+              Digital{" "}
+              <span className="relative inline-block">
+                <span className="text-luxury">Fingerprints</span>
+                <AnimatePresence>
+                  {headlineComplete && (
+                    <motion.div
+                      className="absolute -right-4 top-1/2 w-2 h-2 bg-white rounded-full"
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ 
+                        scale: [0, 1.5, 1], 
+                        opacity: [0, 1, 0.8],
+                      }}
+                      transition={{ 
+                        duration: 1.2,
+                        ease: "easeOut"
+                      }}
+                    />
+                  )}
+                </AnimatePresence>
+              </span>
+              <br />
+              <span className="text-primary">Built for Velocity</span>
+            </motion.h1>
+          </motion.div>
+
+          <motion.p 
+            variants={itemVariants}
+            className="text-xl md:text-2xl text-foreground/70 mb-12 max-w-3xl mx-auto leading-relaxed font-light"
+          >
+            Where precision meets artistry in the digital realm. 
+            Create, connect, and command respect with luxury digital experiences.
+          </motion.p>
+
+          <motion.div 
+            variants={itemVariants}
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+          >
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link to="/register" className="btn-neon text-lg px-12 py-5 magnetic">
+                Enter the Atelier
+                <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
-              <Link to="/services" className="btn-glass text-lg px-12 py-4">
-                Explore Templates
+            </motion.div>
+            
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link to="/services" className="btn-glass text-lg px-12 py-5 magnetic">
+                <Play className="w-5 h-5 mr-2" />
+                Watch the Story
               </Link>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 3, duration: 0.8 }}
+        >
+          <motion.div
+            className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center"
+            whileHover={{ borderColor: "rgba(140, 197, 255, 0.5)" }}
+          >
+            <motion.div
+              className="w-1 h-3 bg-white/40 rounded-full mt-2"
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* Social Proof */}
+      <section className="py-24">
+        <div className="container mx-auto px-6">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <p className="text-foreground/50 mb-8 font-light tracking-wide">
+              Trusted by visionaries worldwide
+            </p>
+            <div className="flex justify-center items-center space-x-16 opacity-30">
+              {["APEX", "LUXE", "VERTEX", "PRIME", "ZENITH"].map((logo, index) => (
+                <motion.div
+                  key={index}
+                  className="text-xl font-serif font-bold text-foreground"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 0.3, y: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.6 }}
+                  viewport={{ once: true }}
+                  whileHover={{ opacity: 0.6, scale: 1.1 }}
+                >
+                  {logo}
+                </motion.div>
+              ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Why Neon Tech Section */}
-      <section className="relative z-10 py-20">
+      {/* Philosophy */}
+      <section className="py-32">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-headline font-bold text-neon mb-6">
-              Why Neon Tech
+          <motion.div
+            className="max-w-4xl mx-auto text-center"
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            viewport={{ once: true }}
+          >
+            <motion.div
+              className="inline-flex items-center space-x-2 mb-8 px-6 py-3 glass rounded-full"
+              whileHover={{ scale: 1.05 }}
+            >
+              <Sparkles className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-primary">The Philosophy</span>
+            </motion.div>
+            
+            <h2 className="text-4xl md:text-6xl font-serif font-bold text-foreground mb-8 leading-tight">
+              Excellence is never{" "}
+              <span className="text-luxury">an accident</span>
             </h2>
-            <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-neon-blue to-transparent mx-auto"></div>
-          </div>
+            
+            <p className="text-xl text-foreground/70 leading-relaxed font-light max-w-3xl mx-auto">
+              It is always the result of high intention, sincere effort, and intelligent execution. 
+              It represents the wise choice of many alternatives.
+            </p>
+            
+            <motion.div
+              className="mt-12"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <cite className="text-foreground/50 font-light italic">— Aristotle</cite>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+      {/* Teaser Grid */}
+      <section className="py-32">
+        <div className="container mx-auto px-6">
+          <motion.div
+            className="text-center mb-20"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-6">
+              The Neon Tech{" "}
+              <span className="text-luxury">Experience</span>
+            </h2>
+            <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto" />
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {[
               {
-                title: "Precision Crafted",
-                description: "Every pixel serves a purpose, every interaction tells your story",
-                icon: "⬢"
+                title: "Social Fingerprints",
+                description: "Connect with creators, share your journey, build your digital presence",
+                icon: "👥",
+                link: "/feed"
               },
               {
-                title: "Velocity Focused",
-                description: "Built for speed without compromising on sophistication",
-                icon: "⚡"
+                title: "Luxury Templates",
+                description: "Seven curated templates crafted for discerning brands",
+                icon: "✨",
+                link: "/templates"
               },
               {
-                title: "Luxury Standard",
-                description: "Premium experiences that command respect and inspire trust",
-                icon: "◆"
+                title: "Bespoke Builder",
+                description: "Create custom digital experiences with precision and elegance",
+                icon: "🎨",
+                link: "/builder"
               },
               {
-                title: "Future Ready",
-                description: "Scalable architecture that evolves with your ambitions",
-                icon: "▲"
+                title: "Digital Concierge",
+                description: "AI-powered insights and recommendations for your digital presence",
+                icon: "🤖",
+                link: "/dashboard"
+              },
+              {
+                title: "Community",
+                description: "Join an exclusive network of digital craftspeople and visionaries",
+                icon: "🌟",
+                link: "/leaderboard"
+              },
+              {
+                title: "Analytics",
+                description: "Deep insights into your digital fingerprint's performance and reach",
+                icon: "📊",
+                link: "/dashboard"
               }
             ].map((feature, index) => (
-              <div key={index} className="glass-card text-center group">
-                <div className="text-4xl mb-6 text-neon-blue group-hover:animate-glow transition-all duration-300">
+              <motion.div
+                key={index}
+                className="glass-card group cursor-pointer"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1, duration: 0.6 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -8 }}
+              >
+                <div className="text-4xl mb-6 group-hover:scale-110 transition-transform duration-300">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-headline font-bold text-foreground mb-4">
+                <h3 className="text-xl font-serif font-bold text-foreground mb-4">
                   {feature.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-foreground/70 leading-relaxed mb-6">
                   {feature.description}
                 </p>
-              </div>
+                <Link
+                  to={feature.link}
+                  className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-medium"
+                >
+                  Explore
+                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Blueprint Section */}
-      <section className="relative z-10 py-20">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-headline font-bold text-neon mb-6">
-              The Blueprint
+      {/* CTA Section */}
+      <section className="py-32 relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-violet/5" />
+        <div className="container mx-auto px-6 relative z-10">
+          <motion.div
+            className="text-center max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-5xl md:text-6xl font-serif font-bold text-foreground mb-8 leading-tight">
+              Ready to look{" "}
+              <span className="text-luxury">untouchable?</span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Three pillars of digital excellence
+            
+            <p className="text-xl text-foreground/70 mb-12 max-w-2xl mx-auto leading-relaxed font-light">
+              Join the exclusive circle of those who refuse to settle for ordinary
             </p>
-          </div>
-
-          <div className="max-w-6xl mx-auto">
-            <div className="flex flex-col lg:flex-row gap-8 items-center">
-              {[
-                {
-                  title: "Identity & Soul",
-                  subtitle: "Brand Architecture",
-                  description: "We don't create logos; we architect identities that command respect and inspire loyalty."
-                },
-                {
-                  title: "Digital Flagships", 
-                  subtitle: "Web Experiences",
-                  description: "Your website isn't just a digital brochure—it's your most important sales representative, working 24/7."
-                },
-                {
-                  title: "Bespoke Instruments",
-                  subtitle: "Custom Applications", 
-                  description: "When off-the-shelf solutions fall short, we create competitive advantages tailored to your vision."
-                }
-              ].map((service, index) => (
-                <div key={index} className="glass-card flex-1 group cursor-pointer hover:scale-105 transition-all duration-500">
-                  <div className="h-32 mb-6 bg-gradient-to-br from-neon-blue/20 to-luxury-purple/20 rounded-xl flex items-center justify-center relative overflow-hidden">
-                    <div className="absolute inset-0 animate-shimmer opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
-                    <div className="text-3xl font-headline font-bold text-luxury-periwinkle">
-                      {service.title.split(' ')[0][0]}
-                    </div>
-                  </div>
-                  <h3 className="text-2xl font-headline font-bold text-neon mb-2">
-                    {service.title}
-                  </h3>
-                  <p className="text-luxury-periwinkle font-medium mb-4">
-                    {service.subtitle}
-                  </p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {service.description}
-                  </p>
-                </div>
-              ))}
+            
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link to="/register" className="btn-neon text-lg px-12 py-5 magnetic">
+                  Begin Your Journey
+                </Link>
+              </motion.div>
+              
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link to="/contact" className="btn-glass text-lg px-12 py-5 magnetic">
+                  Schedule Consultation
+                </Link>
+              </motion.div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Moment of Impact */}
-      <section className="relative z-10 py-20">
-        <div className="container mx-auto px-6">
-          <div className="glass-card max-w-4xl mx-auto text-center">
-            <div className="text-6xl md:text-7xl font-headline font-bold text-neon mb-4">
-              10x
-            </div>
-            <p className="text-xl text-foreground/90 mb-2">
-              Average increase in client engagement
-            </p>
-            <p className="text-muted-foreground">
-              When excellence meets velocity
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Client Logos */}
-      <section className="relative z-10 py-20">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <p className="text-muted-foreground mb-8">Trusted by forward-thinking organizations</p>
-            <div className="flex justify-center items-center space-x-12 opacity-40">
-              {["APEX", "LUXE", "VERTEX", "PRIME", "ZENITH"].map((logo, index) => (
-                <div key={index} className="text-xl font-headline font-bold text-foreground">
-                  {logo}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer CTA */}
-      <section className="relative z-10 py-20 bg-gradient-to-r from-canvas-surface to-canvas-elevated">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-4xl font-headline font-bold text-luxury mb-6">
-            Ready to look untouchable?
-          </h2>
-          <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Join the exclusive circle of those who refuse to settle for ordinary
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link to="/register" className="btn-neon text-lg px-12 py-4">
-              Begin Your Journey
-            </Link>
-            <Link to="/contact" className="btn-glass text-lg px-12 py-4">
-              Schedule Consultation
-            </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       <Footer />
-    </div>
+    </AuraBackground>
   );
 };
 

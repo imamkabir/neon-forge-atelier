@@ -1,0 +1,42 @@
+[
+  {
+    "id": "1",
+    "userId": "1",
+    "type": "image",
+    "media": "https://images.unsplash.com/photo-1618556450991-2f1af64e8191?w=400&h=600&fit=crop",
+    "caption": "Behind the scenes of our latest brand identity project",
+    "createdAt": "2024-12-29T09:00:00Z",
+    "expiresAt": "2024-12-30T09:00:00Z",
+    "views": 1247
+  },
+  {
+    "id": "2",
+    "userId": "2",
+    "type": "text",
+    "content": "Building something incredible. Can't wait to share it with you all.",
+    "backgroundColor": "#8CC5FF",
+    "createdAt": "2024-12-29T07:30:00Z",
+    "expiresAt": "2024-12-30T07:30:00Z",
+    "views": 892
+  },
+  {
+    "id": "3",
+    "userId": "3",
+    "type": "image",
+    "media": "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=400&h=600&fit=crop",
+    "caption": "Color inspiration from Milan Fashion Week",
+    "createdAt": "2024-12-29T06:15:00Z",
+    "expiresAt": "2024-12-30T06:15:00Z",
+    "views": 2134
+  },
+  {
+    "id": "4",
+    "userId": "4",
+    "type": "text",
+    "content": "The future belongs to creators who understand both art and commerce.",
+    "backgroundColor": "#838CE5",
+    "createdAt": "2024-12-29T05:45:00Z",
+    "expiresAt": "2024-12-30T05:45:00Z",
+    "views": 1567
+  }
+]

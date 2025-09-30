@@ -1,0 +1,107 @@
+[
+  {
+    "id": "1",
+    "userId": "1",
+    "type": "text",
+    "content": "Just launched a new digital identity for a luxury watch brand. The intersection of traditional craftsmanship and digital innovation never gets old. ✨ #luxury #digitalidentity #craftsmanship",
+    "media": [
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop"
+    ],
+    "hashtags": ["luxury", "digitalidentity", "craftsmanship"],
+    "likes": 234,
+    "comments": 45,
+    "reposts": 12,
+    "createdAt": "2024-12-29T10:30:00Z",
+    "location": "Lagos, Nigeria"
+  },
+  {
+    "id": "2",
+    "userId": "2",
+    "type": "text",
+    "content": "The future of e-commerce isn't just about transactions—it's about creating experiences that customers remember. Building something special with @neontech 🚀 #ecommerce #ux #future",
+    "hashtags": ["ecommerce", "ux", "future"],
+    "likes": 189,
+    "comments": 23,
+    "reposts": 8,
+    "createdAt": "2024-12-29T08:15:00Z",
+    "location": "San Francisco, CA"
+  },
+  {
+    "id": "3",
+    "userId": "3",
+    "type": "image",
+    "content": "Color palette exploration for a new luxury hospitality brand. Sometimes the perfect shade makes all the difference. 🎨 #design #luxury #hospitality #colortheory",
+    "media": [
+      "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=600&h=400&fit=crop"
+    ],
+    "hashtags": ["design", "luxury", "hospitality", "colortheory"],
+    "likes": 456,
+    "comments": 67,
+    "reposts": 34,
+    "createdAt": "2024-12-29T06:45:00Z",
+    "location": "Milan, Italy"
+  },
+  {
+    "id": "4",
+    "userId": "4",
+    "type": "text",
+    "content": "Invested in three digital-first companies this quarter. The creator economy is reshaping how we think about value creation. Exciting times ahead! 💡 #investing #creatoreconomy #venture",
+    "hashtags": ["investing", "creatoreconomy", "venture"],
+    "likes": 678,
+    "comments": 89,
+    "reposts": 45,
+    "createdAt": "2024-12-28T16:20:00Z",
+    "location": "Seoul, South Korea"
+  },
+  {
+    "id": "5",
+    "userId": "5",
+    "type": "text",
+    "content": "Curating a new exhibition on digital art and NFTs. The boundary between physical and digital art continues to blur in fascinating ways. 🖼️ #digitalart #curation #nft #gallery",
+    "hashtags": ["digitalart", "curation", "nft", "gallery"],
+    "likes": 123,
+    "comments": 34,
+    "reposts": 7,
+    "createdAt": "2024-12-28T14:10:00Z",
+    "location": "Paris, France"
+  },
+  {
+    "id": "6",
+    "userId": "1",
+    "type": "text",
+    "content": "Working late on a new brand identity. There's something magical about the moment when all the elements click into place. The logo, the colors, the typography—everything singing in harmony. ✨ #branding #design #latenight",
+    "hashtags": ["branding", "design", "latenight"],
+    "likes": 345,
+    "comments": 56,
+    "reposts": 23,
+    "createdAt": "2024-12-28T22:45:00Z",
+    "location": "Lagos, Nigeria"
+  },
+  {
+    "id": "7",
+    "userId": "2",
+    "type": "image",
+    "content": "Sneak peek at the new checkout flow we're building. Obsessing over every micro-interaction. Details matter. 🔥 #ux #ecommerce #microinteractions",
+    "media": [
+      "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop"
+    ],
+    "hashtags": ["ux", "ecommerce", "microinteractions"],
+    "likes": 567,
+    "comments": 78,
+    "reposts": 34,
+    "createdAt": "2024-12-28T19:30:00Z",
+    "location": "San Francisco, CA"
+  },
+  {
+    "id": "8",
+    "userId": "3",
+    "type": "text",
+    "content": "Just finished a brand workshop with a Michelin-starred restaurant. The challenge: how do you translate the sensory experience of fine dining into a digital identity? 🍽️ #luxury #hospitality #branding",
+    "hashtags": ["luxury", "hospitality", "branding"],
+    "likes": 234,
+    "comments": 45,
+    "reposts": 18,
+    "createdAt": "2024-12-28T12:15:00Z",
+    "location": "Milan, Italy"
+  }
+]
