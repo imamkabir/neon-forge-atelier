@@ -156,7 +156,7 @@ const Messages = () => {
                       key={conv.id}
                       onClick={() => setSelectedConversation(conv.id)}
                       className={`p-4 rounded-2xl cursor-pointer transition-all duration-300 group ${
-                        selectedConversation === conv.id
+                                <Avatar className="w-12 h-12 ring-2 ring-blue/30">
                           ? 'bg-primary/20 border border-primary/30'
                           : 'hover:bg-white/5'
                       }`}
@@ -219,7 +219,7 @@ const Messages = () => {
               
               {selectedUser ? (
                 <>
-                  {/* Chat Header */}
+                                          ? 'bg-blue text-white'
                   <div className="p-6 border-b border-white/10 flex items-center justify-between">
                     <div className="flex items-center space-x-4">
                       <button
@@ -281,7 +281,7 @@ const Messages = () => {
                     <div className="space-y-6">
                       <AnimatePresence>
                         {messages.map((message, index) => (
-                          <motion.div
+                                    <h3 className="font-semibold text-foreground truncate group-hover:text-blue transition-colors">
                             key={message.id}
                             className={`flex ${
                               message.senderId === "1" ? 'justify-end' : 'justify-start'
@@ -290,17 +290,17 @@ const Messages = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: index * 0.1, duration: 0.4 }}
                           >
-                            <motion.div
+                              className="w-24 h-24 bg-blue/20 rounded-3xl flex items-center justify-center mx-auto mb-6"
                               className={`max-w-xs lg:max-w-md px-6 py-4 rounded-3xl ${
                                 message.senderId === "1"
-                                  ? 'bg-primary text-white'
-                                  : 'glass text-foreground'
+                                  ? 'bg-blue/20 border border-blue/30'
+                                        className="w-5 h-5 bg-blue rounded-full flex items-center justify-center ml-2"
                               }`}
                               whileHover={{ scale: 1.02 }}
                               transition={{ type: "spring", stiffness: 300 }}
                             >
                               <p className="text-sm leading-relaxed">{message.content}</p>
-                              <p className={`text-xs mt-2 ${
+                              <MessageCircle className="w-12 h-12 text-blue" />
                                 message.senderId === "1" 
                                   ? 'text-white/70' 
                                   : 'text-foreground/50'

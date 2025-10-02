@@ -71,7 +71,7 @@ const Referrals = () => {
 
             <h1 className="text-5xl md:text-7xl font-serif font-bold text-foreground mb-6 leading-tight">
               Share the{" "}
-              <span className="text-luxury">Excellence</span>
+              <span className="text-blue">Excellence</span>
             </h1>
             
             <p className="text-xl text-foreground/70 font-light max-w-3xl mx-auto">
@@ -93,10 +93,10 @@ const Referrals = () => {
               <div className="fingerprint-card">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center space-x-3">
-                    <div className="w-6 h-6 bg-primary rounded-lg flex items-center justify-center">
+                    <div className="w-6 h-6 bg-blue rounded-lg flex items-center justify-center">
                       <Users className="w-4 h-4 text-white" />
                     </div>
-                    <span className="font-serif font-bold text-primary text-sm tracking-wide">
+                    <span className="font-serif font-bold text-blue text-sm tracking-wide">
                       REFERRAL CODE
                     </span>
                   </div>
@@ -159,7 +159,7 @@ const Referrals = () => {
                 <div className="grid grid-cols-2 gap-6">
                   <div className="text-center">
                     <motion.div
-                      className="text-3xl font-bold text-primary mb-2"
+                      className="text-3xl font-bold text-blue mb-2"
                       initial={{ opacity: 0, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.6, type: "spring" }}
@@ -170,7 +170,7 @@ const Referrals = () => {
                   </div>
                   <div className="text-center">
                     <motion.div
-                      className="text-3xl font-bold text-violet mb-2"
+                      className="text-3xl font-bold text-crimson mb-2"
                       initial={{ opacity: 0, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.7, type: "spring" }}
@@ -181,7 +181,7 @@ const Referrals = () => {
                   </div>
                   <div className="text-center">
                     <motion.div
-                      className="text-3xl font-bold text-crimson mb-2"
+                      className="text-3xl font-bold text-gold mb-2"
                       initial={{ opacity: 0, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.8, type: "spring" }}
@@ -238,12 +238,12 @@ const Referrals = () => {
                           className={`w-10 h-10 rounded-xl flex items-center justify-center ${
                             milestone.completed 
                               ? "bg-green-500/20" 
-                              : "bg-primary/20"
+                              : "bg-blue/20"
                           }`}
                           whileHover={{ scale: 1.1 }}
                         >
                           <milestone.icon className={`w-5 h-5 ${
-                            milestone.completed ? "text-green-400" : "text-primary"
+                            milestone.completed ? "text-green-400" : "text-blue"
                           }`} />
                         </motion.div>
                         
@@ -283,7 +283,7 @@ const Referrals = () => {
                       transition={{ delay: 0.7 + index * 0.1, duration: 0.4 }}
                     >
                       <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-gradient-to-br from-primary/30 to-violet/30 rounded-full flex items-center justify-center">
+                        <div className="w-8 h-8 bg-gradient-to-br from-blue/30 to-crimson/30 rounded-full flex items-center justify-center">
                           <span className="text-xs font-bold text-white">
                             {referral.name.split(' ').map(n => n[0]).join('')}
                           </span>
