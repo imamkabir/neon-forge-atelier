@@ -9,11 +9,11 @@
 @layer base {
   :root {
     /* Core Palette */
-    --bg: 11 11 16; /* #0B0B10 charcoal */
+    --bg: 11 11 16; /* #0B0B10 charcoal black */
     --ink: 233 237 245; /* #E9EDF5 soft white */
     --blue: 140 197 255; /* #8CC5FF ice blue glow */
-    --crimson: 255 85 112; /* #FF5570 subtle crimson accent */
-    --violet: 131 140 229; /* #838CE5 cool violet haze */
+    --crimson: 255 85 112; /* #FF5570 crimson pink glow */
+    --gold: 255 213 79; /* #FFD54F gold for badges */
     
     /* Glass System */
     --glass-border: rgba(255, 255, 255, 0.12);
@@ -39,7 +39,7 @@
     --secondary-foreground: var(--ink);
     --muted: 18 18 23;
     --muted-foreground: 156 163 175;
-    --accent: var(--violet);
+    --accent: var(--crimson);
     --accent-foreground: var(--bg);
     --destructive: var(--crimson);
     --destructive-foreground: var(--ink);
@@ -149,16 +149,17 @@
 
   /* Button system */
   .btn-neon {
-    @apply bg-primary text-primary-foreground px-8 py-4 rounded-2xl font-semibold;
-    @apply transition-all duration-300 hover:shadow-lg hover:shadow-primary/25;
+    background: linear-gradient(135deg, hsl(var(--blue)), hsl(var(--crimson)));
+    @apply text-white px-8 py-4 rounded-2xl font-semibold;
+    @apply transition-all duration-300 hover:shadow-lg hover:shadow-blue/25;
     @apply hover:scale-[1.02] active:scale-[0.98];
     font-family: var(--font-sans);
     letter-spacing: -0.01em;
   }
 
   .btn-glass {
-    @apply glass px-8 py-4 rounded-2xl font-medium text-foreground;
-    @apply transition-all duration-300 hover:bg-white/10;
+    @apply glass px-8 py-4 rounded-2xl font-medium text-foreground border border-white/20;
+    @apply transition-all duration-300 hover:bg-white/10 hover:shadow-lg hover:shadow-blue/15;
     @apply hover:scale-[1.02] active:scale-[0.98];
   }
 

@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { ArrowRight, Eye, EyeOff } from "lucide-react";
 import NavBar from "@/components/NavBar";
-import ConstellationInput from "@/components/ConstellationInput";
+import AuraBackground from "@/components/AuraBackground";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 interface FormData {
   name: string;
@@ -18,16 +22,12 @@ const Register = () => {
     confirmPassword: ""
   });
   const [currentStep, setCurrentStep] = useState(0);
-  const [showThreshold, setShowThreshold] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const navigate = useNavigate();
 
   const steps = ["name", "email", "password", "confirmPassword"];
-
-  const handleThresholdClick = () => {
-    setShowThreshold(false);
-    setTimeout(() => setCurrentStep(0), 500);
-  };
 
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
@@ -54,208 +54,273 @@ const Register = () => {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen flex items-center justify-center relative">
+      <AuraBackground variant="blue" intensity="subtle">
         <NavBar />
-        
-        <div className="glass-card max-w-lg mx-auto text-center animate-fade-in">
-          <div className="mb-8">
-            <div className="w-20 h-20 bg-gradient-to-br from-luxury-purple to-luxury-lavender rounded-full mx-auto mb-6 animate-glow flex items-center justify-center">
+        <div className="pt-24 min-h-screen flex items-center justify-center">
+          <motion.div
+            className="glass-card max-w-lg mx-auto text-center"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.div
+              className="w-20 h-20 bg-gradient-to-br from-blue to-crimson rounded-full mx-auto mb-6 flex items-center justify-center"
+              animate={{ 
+                boxShadow: [
+                  "0 0 20px rgba(140, 197, 255, 0.3)",
+                  "0 0 40px rgba(140, 197, 255, 0.6)",
+                  "0 0 20px rgba(140, 197, 255, 0.3)"
+                ]
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
               <span className="text-3xl text-white">✦</span>
-            </div>
-            <h1 className="text-4xl font-headline font-bold mb-4 text-luxury">
+            </motion.div>
+            <h1 className="text-4xl font-serif font-bold mb-4 text-blue">
               Welcome, {formData.name}
             </h1>
-            <p className="text-muted-foreground mb-2">
+            <p className="text-foreground/60 mb-2">
               Your inscription has been recorded in our ledger.
             </p>
-            <p className="text-sm text-muted-foreground/60">
+            <p className="text-sm text-foreground/40">
               {new Date().toLocaleString()}
             </p>
-          </div>
-
-          <div className="space-y-4">
-            <p className="text-foreground/90 leading-relaxed">
-              You now have access to the Neon Tech Atelier. Prepare to experience 
-              digital craftsmanship like never before.
-            </p>
             
-            <button
-              onClick={() => navigate("/dashboard")}
-              className="btn-neon w-full"
-            >
-              Enter the Atelier
-            </button>
-          </div>
+            <div className="mt-8">
+              <Button
+                onClick={() => navigate("/dashboard")}
+                className="btn-neon"
+              >
+                Enter the Atelier
+              </Button>
+            </div>
+          </motion.div>
         </div>
-      </div>
+      </AuraBackground>
     );
   }
 
   return (
-    <div className="min-h-screen relative">
+    <AuraBackground variant="blue" intensity="subtle">
       <NavBar />
       
-      {/* Threshold Phase */}
-      {showThreshold && (
-        <div className="fixed inset-0 flex items-center justify-center z-40 bg-canvas-dark">
-          <div className="text-center">
-            <div 
-              onClick={handleThresholdClick}
-              className="w-32 h-32 mx-auto mb-8 cursor-pointer transform transition-all duration-700 hover:scale-110"
-              style={{
-                background: `radial-gradient(circle, hsl(var(--luxury-lavender)) 0%, hsl(var(--luxury-purple)) 100%)`,
-                borderRadius: "50%",
-                boxShadow: "0 0 60px rgba(214, 185, 252, 0.5)"
-              }}
+      <div className="pt-24 min-h-screen flex items-center">
+        <div className="container mx-auto px-6">
+          <div className="max-w-md mx-auto">
+            
+            <motion.div
+              className="text-center mb-12"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
             >
-              <div className="w-full h-full rounded-full border-2 border-luxury-lavender/30 animate-pulse"></div>
-            </div>
-            <p className="text-muted-foreground text-lg">
-              Click to unlock membership
-            </p>
-          </div>
-        </div>
-      )}
+              <motion.div
+                className="w-16 h-16 bg-gradient-to-br from-blue/20 to-crimson/20 rounded-2xl mx-auto mb-8 flex items-center justify-center"
+                animate={{ 
+                  boxShadow: [
+                    "0 0 20px rgba(140, 197, 255, 0.2)",
+                    "0 0 40px rgba(140, 197, 255, 0.4)",
+                    "0 0 20px rgba(140, 197, 255, 0.2)"
+                  ]
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                <div className="white-dot" />
+              </motion.div>
+              <h1 className="text-4xl font-serif font-bold mb-4 text-blue">
+                Membership Ledger
+              </h1>
+              <p className="text-foreground/60">
+                Become a Member
+              </p>
+            </motion.div>
 
-      {/* Registration Form */}
-      {!showThreshold && (
-        <div className="pt-24 min-h-screen flex items-center">
-          <div className="container mx-auto px-6">
-            <div className="max-w-md mx-auto">
-              <div className="text-center mb-12 animate-fade-in">
-                <h1 className="text-4xl font-headline font-bold mb-4 text-luxury">
-                  Membership Ledger
-                </h1>
-                <p className="text-muted-foreground">
-                  Become a Member
-                </p>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-8">
-                {/* Name Step */}
-                {currentStep === 0 && (
-                  <div className="animate-fade-in text-center">
-                    <label className="block text-lg font-medium text-foreground mb-6">
-                      Your Name
-                    </label>
-                    <ConstellationInput
-                      value={formData.name}
-                      onChange={(value) => setFormData(prev => ({ ...prev, name: value }))}
-                      placeholder="Enter your full name"
-                      className="text-center text-lg py-6"
-                    />
-                    {formData.name && (
-                      <button
+            <form onSubmit={handleSubmit} className="space-y-8">
+              {/* Name Step */}
+              {currentStep === 0 && (
+                <motion.div
+                  className="text-center"
+                  initial={{ opacity: 0, x: 40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <label className="block text-lg font-medium text-foreground mb-6">
+                    Your Name
+                  </label>
+                  <Input
+                    value={formData.name}
+                    onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                    placeholder="Enter your full name"
+                    className="glass border-white/20 text-center text-lg py-6 bg-white/5"
+                  />
+                  {formData.name && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <Button
                         type="button"
                         onClick={handleNext}
                         className="btn-neon mt-6"
                       >
                         Continue
-                      </button>
-                    )}
-                  </div>
-                )}
+                      </Button>
+                    </motion.div>
+                  )}
+                </motion.div>
+              )}
 
-                {/* Email Step */}
-                {currentStep === 1 && (
-                  <div className="animate-fade-in text-center">
-                    <label className="block text-lg font-medium text-foreground mb-6">
-                      Email Address
-                    </label>
-                    <ConstellationInput
-                      type="email"
-                      value={formData.email}
-                      onChange={(value) => setFormData(prev => ({ ...prev, email: value }))}
-                      placeholder="your@email.com"
-                      className="text-center text-lg py-6"
-                    />
-                    {formData.email && (
-                      <button
+              {/* Email Step */}
+              {currentStep === 1 && (
+                <motion.div
+                  className="text-center"
+                  initial={{ opacity: 0, x: 40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <label className="block text-lg font-medium text-foreground mb-6">
+                    Email Address
+                  </label>
+                  <Input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                    placeholder="your@email.com"
+                    className="glass border-white/20 text-center text-lg py-6 bg-white/5"
+                  />
+                  {formData.email && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <Button
                         type="button"
                         onClick={handleNext}
                         className="btn-neon mt-6"
                       >
                         Continue
-                      </button>
-                    )}
-                  </div>
-                )}
+                      </Button>
+                    </motion.div>
+                  )}
+                </motion.div>
+              )}
 
-                {/* Password Step */}
-                {currentStep === 2 && (
-                  <div className="animate-fade-in text-center">
-                    <label className="block text-lg font-medium text-foreground mb-6">
-                      Personal Key
-                    </label>
-                    <ConstellationInput
-                      type="password"
+              {/* Password Step */}
+              {currentStep === 2 && (
+                <motion.div
+                  className="text-center"
+                  initial={{ opacity: 0, x: 40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <label className="block text-lg font-medium text-foreground mb-6">
+                    Personal Key
+                  </label>
+                  <div className="relative">
+                    <Input
+                      type={showPassword ? "text" : "password"}
                       value={formData.password}
-                      onChange={(value) => setFormData(prev => ({ ...prev, password: value }))}
+                      onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
                       placeholder="Create a secure password"
-                      className="text-center text-lg py-6"
+                      className="glass border-white/20 text-center text-lg py-6 bg-white/5 pr-12"
                     />
-                    <p className="text-sm text-muted-foreground mt-2">
-                      Watch the constellation grow as you type
-                    </p>
-                    {formData.password.length >= 8 && (
-                      <button
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 text-foreground/40 hover:text-foreground transition-colors"
+                    >
+                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
+                  </div>
+                  <p className="text-sm text-foreground/50 mt-2">
+                    Watch the constellation grow as you type
+                  </p>
+                  {formData.password.length >= 8 && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <Button
                         type="button"
                         onClick={handleNext}
                         className="btn-neon mt-6"
                       >
                         Continue
-                      </button>
-                    )}
-                  </div>
-                )}
+                      </Button>
+                    </motion.div>
+                  )}
+                </motion.div>
+              )}
 
-                {/* Confirm Password Step */}
-                {currentStep === 3 && (
-                  <div className="animate-fade-in text-center">
-                    <label className="block text-lg font-medium text-foreground mb-6">
-                      Confirm Personal Key
-                    </label>
-                    <ConstellationInput
-                      type="password"
+              {/* Confirm Password Step */}
+              {currentStep === 3 && (
+                <motion.div
+                  className="text-center"
+                  initial={{ opacity: 0, x: 40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <label className="block text-lg font-medium text-foreground mb-6">
+                    Confirm Personal Key
+                  </label>
+                  <div className="relative">
+                    <Input
+                      type={showConfirmPassword ? "text" : "password"}
                       value={formData.confirmPassword}
-                      onChange={(value) => setFormData(prev => ({ ...prev, confirmPassword: value }))}
+                      onChange={(e) => setFormData(prev => ({ ...prev, confirmPassword: e.target.value }))}
                       placeholder="Confirm your password"
-                      className="text-center text-lg py-6"
+                      className="glass border-white/20 text-center text-lg py-6 bg-white/5 pr-12"
                     />
-                    {formData.confirmPassword && formData.password === formData.confirmPassword && (
-                      <button
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 text-foreground/40 hover:text-foreground transition-colors"
+                    >
+                      {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
+                  </div>
+                  {formData.confirmPassword && formData.password === formData.confirmPassword && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <Button
                         type="submit"
                         className="btn-neon mt-6 text-lg px-12 py-4"
                       >
                         Inscribe My Name
-                      </button>
-                    )}
-                    {formData.confirmPassword && formData.password !== formData.confirmPassword && (
-                      <p className="text-accent-red text-sm mt-2">
-                        Keys don't match
-                      </p>
-                    )}
-                  </div>
-                )}
-              </form>
+                      </Button>
+                    </motion.div>
+                  )}
+                  {formData.confirmPassword && formData.password !== formData.confirmPassword && (
+                    <p className="text-crimson text-sm mt-2">
+                      Keys don't match
+                    </p>
+                  )}
+                </motion.div>
+              )}
+            </form>
 
-              {/* Login Link */}
-              <div className="text-center mt-8">
-                <p className="text-muted-foreground">
-                  Already a member?{" "}
-                  <Link
-                    to="/login"
-                    className="text-neon-blue hover:underline font-medium"
-                  >
-                    Sign in here
-                  </Link>
-                </p>
-              </div>
+            {/* Login Link */}
+            <div className="text-center mt-8">
+              <p className="text-foreground/50">
+                Already a member?{" "}
+                <Link
+                  to="/login"
+                  className="text-blue hover:text-blue/80 font-medium transition-colors"
+                >
+                  Sign in here
+                </Link>
+              </p>
             </div>
           </div>
         </div>
-      )}
-    </div>
+      </div>
+    </AuraBackground>
   );
 };
 

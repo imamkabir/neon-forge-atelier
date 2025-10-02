@@ -67,7 +67,7 @@ const Dashboard = () => {
           
           {/* Digital Concierge Bar */}
           <motion.div
-            className="glass-strong rounded-3xl p-8 mb-12 border border-primary/20"
+            className="glass rounded-3xl p-8 mb-12 border border-blue/20"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -105,13 +105,13 @@ const Dashboard = () => {
                       <div className="flex items-center space-x-3">
                         <div className={`w-2 h-2 rounded-full ${
                           insight.priority === "high" ? "bg-crimson" :
-                          insight.priority === "medium" ? "bg-primary" : "bg-violet"
+                          insight.priority === "medium" ? "bg-blue" : "bg-blue/60"
                         }`} />
                         <span className="text-foreground/80 group-hover:text-foreground transition-colors">
                           {insight.title}
                         </span>
                       </div>
-                      <button className="text-primary hover:text-primary/80 text-sm font-medium transition-colors">
+                      <button className="text-blue hover:text-blue/80 text-sm font-medium transition-colors">
                         {insight.action}
                       </button>
                     </motion.div>
@@ -162,7 +162,7 @@ const Dashboard = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                   <div className="text-center">
                     <motion.div 
-                      className="text-4xl font-bold text-primary mb-2"
+                      className="text-4xl font-bold text-blue mb-2"
                       initial={{ opacity: 0, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.5, type: "spring" }}
@@ -174,7 +174,7 @@ const Dashboard = () => {
                   </div>
                   <div className="text-center">
                     <motion.div 
-                      className="text-4xl font-bold text-violet mb-2"
+                      className="text-4xl font-bold text-crimson mb-2"
                       initial={{ opacity: 0, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.6, type: "spring" }}
@@ -186,7 +186,7 @@ const Dashboard = () => {
                   </div>
                   <div className="text-center">
                     <motion.div 
-                      className="text-4xl font-bold text-crimson mb-2"
+                      className="text-4xl font-bold text-gold mb-2"
                       initial={{ opacity: 0, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.7, type: "spring" }}
@@ -194,13 +194,13 @@ const Dashboard = () => {
                       {userPosts.length}
                     </motion.div>
                     <div className="text-foreground/60">Posts Published</div>
-                    <div className="text-sm text-primary mt-1">2 this week</div>
+                    <div className="text-sm text-blue mt-1">2 this week</div>
                   </div>
                 </div>
 
                 {/* Mock Chart */}
                 <div className="h-64 glass rounded-2xl flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-violet/5 to-crimson/5" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue/10 via-crimson/5 to-gold/5" />
                   <motion.div
                     className="text-foreground/40 text-center"
                     initial={{ opacity: 0 }}
@@ -238,7 +238,7 @@ const Dashboard = () => {
                       <motion.div
                         className={`w-4 h-4 rounded-full border-2 ${
                           milestone.completed 
-                            ? "bg-primary border-primary" 
+                            ? "bg-blue border-blue" 
                             : "border-white/30"
                         }`}
                         whileHover={{ scale: 1.2 }}
@@ -267,7 +267,7 @@ const Dashboard = () => {
                           className="opacity-0 group-hover:opacity-100 transition-opacity"
                           whileHover={{ scale: 1.1 }}
                         >
-                          <ArrowRight className="w-4 h-4 text-primary" />
+                          <ArrowRight className="w-4 h-4 text-blue" />
                         </motion.div>
                       )}
                     </motion.div>
@@ -297,7 +297,7 @@ const Dashboard = () => {
                   whileTap={{ scale: 0.95 }}
                 >
                   <motion.div
-                    className="w-24 h-24 rounded-2xl bg-gradient-to-br from-primary/20 to-violet/20 flex items-center justify-center mx-auto"
+                    className="w-24 h-24 rounded-2xl bg-gradient-to-br from-blue/20 to-crimson/20 flex items-center justify-center mx-auto"
                     animate={{ 
                       boxShadow: [
                         "0 0 20px rgba(140, 197, 255, 0.2)",
@@ -307,11 +307,11 @@ const Dashboard = () => {
                     }}
                     transition={{ duration: 2, repeat: Infinity }}
                   >
-                    <Zap className="w-8 h-8 text-primary group-hover:scale-110 transition-transform" />
+                    <Zap className="w-8 h-8 text-blue group-hover:scale-110 transition-transform" />
                   </motion.div>
                   
                   <motion.div
-                    className="absolute inset-0 rounded-2xl border-2 border-primary/30"
+                    className="absolute inset-0 rounded-2xl border-2 border-blue/30"
                     animate={{ rotate: [0, 360] }}
                     transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                   />
@@ -343,7 +343,7 @@ const Dashboard = () => {
                         onClick={(e) => e.stopPropagation()}
                       >
                         <motion.div
-                          className="w-16 h-16 bg-gradient-to-br from-primary to-violet rounded-2xl mx-auto mb-6 flex items-center justify-center"
+                          className="w-16 h-16 bg-gradient-to-br from-blue to-crimson rounded-2xl mx-auto mb-6 flex items-center justify-center"
                           animate={{ rotate: impactRevealed ? 0 : 360 }}
                           transition={{ duration: 1 }}
                         >
@@ -367,7 +367,7 @@ const Dashboard = () => {
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ duration: 0.6 }}
                             >
-                              <h3 className="text-2xl font-serif font-bold text-primary mb-4">
+                              <h3 className="text-2xl font-serif font-bold text-blue mb-4">
                                 Featured in Design Letter
                               </h3>
                               <p className="text-foreground/80 leading-relaxed mb-6">
@@ -402,7 +402,7 @@ const Dashboard = () => {
                   <div className="flex justify-between items-center">
                     <span className="text-foreground/60">Profile Views</span>
                     <motion.span 
-                      className="font-bold text-primary"
+                      className="font-bold text-blue"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.8 }}
@@ -413,7 +413,7 @@ const Dashboard = () => {
                   <div className="flex justify-between items-center">
                     <span className="text-foreground/60">Post Reach</span>
                     <motion.span 
-                      className="font-bold text-violet"
+                      className="font-bold text-crimson"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.9 }}
@@ -424,7 +424,7 @@ const Dashboard = () => {
                   <div className="flex justify-between items-center">
                     <span className="text-foreground/60">Engagement Rate</span>
                     <motion.span 
-                      className="font-bold text-crimson"
+                      className="font-bold text-gold"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 1 }}
@@ -448,182 +448,4 @@ const Dashboard = () => {
 
               {/* Quick Actions */}
               <motion.div
-                className="glass-card"
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-              >
-                <h3 className="text-xl font-serif font-bold text-foreground mb-6">
-                  Quick Actions
-                </h3>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <motion.button
-                    className="glass p-6 rounded-2xl hover:bg-white/10 transition-colors text-left group"
-                    whileHover={{ y: -2 }}
-                  >
-                    <Sparkles className="w-6 h-6 text-primary mb-3 group-hover:scale-110 transition-transform" />
-                    <h4 className="font-semibold text-foreground mb-2">Create Fingerprint</h4>
-                    <p className="text-sm text-foreground/60">Start a new digital presence</p>
-                  </motion.button>
-                  
-                  <motion.button
-                    className="glass p-6 rounded-2xl hover:bg-white/10 transition-colors text-left group"
-                    whileHover={{ y: -2 }}
-                  >
-                    <TrendingUp className="w-6 h-6 text-violet mb-3 group-hover:scale-110 transition-transform" />
-                    <h4 className="font-semibold text-foreground mb-2">Boost Post</h4>
-                    <p className="text-sm text-foreground/60">Amplify your latest content</p>
-                  </motion.button>
-                  
-                  <motion.button
-                    className="glass p-6 rounded-2xl hover:bg-white/10 transition-colors text-left group"
-                    whileHover={{ y: -2 }}
-                  >
-                    <Users className="w-6 h-6 text-crimson mb-3 group-hover:scale-110 transition-transform" />
-                    <h4 className="font-semibold text-foreground mb-2">Find Connections</h4>
-                    <p className="text-sm text-foreground/60">Discover like-minded creators</p>
-                  </motion.button>
-                  
-                  <motion.button
-                    className="glass p-6 rounded-2xl hover:bg-white/10 transition-colors text-left group"
-                    whileHover={{ y: -2 }}
-                  >
-                    <Target className="w-6 h-6 text-primary mb-3 group-hover:scale-110 transition-transform" />
-                    <h4 className="font-semibold text-foreground mb-2">Set Goals</h4>
-                    <p className="text-sm text-foreground/60">Define your next milestone</p>
-                  </motion.button>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Right Sidebar */}
-            <div className="lg:col-span-4 space-y-8">
-              
-              {/* Digital Fingerprint Card */}
-              <motion.div
-                className="fingerprint-card"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-              >
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-6 h-6 bg-primary rounded-lg flex items-center justify-center">
-                      <div className="w-3 h-3 bg-white rounded-sm" />
-                    </div>
-                    <span className="font-serif font-bold text-primary text-sm tracking-wide">
-                      NEON TECH
-                    </span>
-                  </div>
-                  <div className="text-xs text-foreground/40 font-mono">
-                    EST. 2025
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <h2 className="text-2xl font-serif font-bold text-foreground mb-2">
-                    {currentUser.name}
-                  </h2>
-                  <div className="flex items-center space-x-2 mb-2">
-                    <span className="text-foreground/60">Digital Creator</span>
-                    <div className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      currentUser.tier === "Enterprise" ? "bg-violet/20 text-violet" :
-                      currentUser.tier === "Pro" ? "bg-primary/20 text-primary" :
-                      "bg-white/10 text-foreground/60"
-                    }`}>
-                      {currentUser.tier}
-                    </div>
-                  </div>
-                  <div className="text-sm text-foreground/50">@{currentUser.handle}</div>
-                </div>
-
-                <div className="mb-6">
-                  <div className="text-xs text-foreground/40 uppercase tracking-wider mb-2">
-                    Fingerprint ID
-                  </div>
-                  <div className="text-lg font-mono text-foreground tracking-wider">
-                    {currentUser.fingerprintId}
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <div className="text-xs text-foreground/40 uppercase tracking-wider mb-3">
-                    Achievements
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {currentUser.badges.slice(0, 3).map((badge, index) => (
-                      <motion.div
-                        key={index}
-                        className="px-3 py-1 bg-violet/15 text-violet rounded-full text-xs font-medium"
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 1 + index * 0.1, type: "spring" }}
-                      >
-                        {badge}
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <Calendar className="w-4 h-4 text-foreground/40" />
-                    <span className="text-xs text-foreground/40">
-                      Member since {currentUser.joinDate}
-                    </span>
-                  </div>
-                  <div className="w-4 h-4 bg-primary/50 rounded-full animate-pulse" />
-                </div>
-              </motion.div>
-
-              {/* Recent Activity */}
-              <motion.div
-                className="glass-card"
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.7 }}
-              >
-                <h3 className="text-xl font-serif font-bold text-foreground mb-6">
-                  Recent Activity
-                </h3>
-                
-                <div className="space-y-4">
-                  {[
-                    { action: "New follower", detail: "Marcus Chen started following you", time: "2h ago" },
-                    { action: "Post liked", detail: "Your latest post reached 234 likes", time: "4h ago" },
-                    { action: "Profile viewed", detail: "15 new profile views from Milan", time: "6h ago" }
-                  ].map((activity, index) => (
-                    <motion.div
-                      key={index}
-                      className="flex items-start space-x-3 p-3 hover:bg-white/5 rounded-xl transition-colors cursor-pointer group"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.9 + index * 0.1, duration: 0.4 }}
-                      whileHover={{ x: 4 }}
-                    >
-                      <div className="w-2 h-2 bg-primary rounded-full mt-2 group-hover:scale-125 transition-transform" />
-                      <div className="flex-1">
-                        <div className="font-medium text-foreground text-sm">
-                          {activity.action}
-                        </div>
-                        <div className="text-foreground/60 text-sm">
-                          {activity.detail}
-                        </div>
-                        <div className="text-foreground/40 text-xs mt-1">
-                          {activity.time}
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </AuraBackground>
-  );
-};
-
-export default Dashboard;
+                className="glass-car

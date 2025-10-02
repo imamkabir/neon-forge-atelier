@@ -1,15 +1,19 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import NavBar from "@/components/NavBar";
-import ConstellationInput from "@/components/ConstellationInput";
+import AuraBackground from "@/components/AuraBackground";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [currentPhase, setCurrentPhase] = useState<"recognition" | "entry">("recognition");
   const [backgroundTheme, setBackgroundTheme] = useState("");
   const [greeting, setGreeting] = useState("");
-  const [showPasswordReset, setShowPasswordReset] = useState(false);
   const navigate = useNavigate();
 
   // Generate background theme from email
@@ -46,127 +50,139 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <AuraBackground variant="blue" intensity="subtle">
       <NavBar />
       
-      {/* Dynamic Background */}
-      <div 
-        className="absolute inset-0 transition-all duration-1000"
-        style={{
-          background: backgroundTheme || "linear-gradient(135deg, hsl(var(--canvas-dark)), hsl(var(--canvas-surface)))"
-        }}
-      >
-        {/* Floating particles */}
-        {[...Array(15)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-foreground/20 rounded-full animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${4 + Math.random() * 4}s`
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="relative z-10 pt-24 min-h-screen flex items-center">
+      <div className="pt-24 min-h-screen flex items-center">
         <div className="container mx-auto px-6">
           <div className="max-w-md mx-auto">
             
             {/* Phase 1 - Recognition */}
             {currentPhase === "recognition" && (
-              <div className="text-center animate-fade-in">
-                <h1 className="text-4xl font-headline font-bold mb-8 text-foreground">
+              <motion.div
+                className="text-center"
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                <motion.div
+                  className="w-16 h-16 bg-gradient-to-br from-blue/20 to-crimson/20 rounded-2xl mx-auto mb-8 flex items-center justify-center"
+                  animate={{ 
+                    boxShadow: [
+                      "0 0 20px rgba(140, 197, 255, 0.2)",
+                      "0 0 40px rgba(140, 197, 255, 0.4)",
+                      "0 0 20px rgba(140, 197, 255, 0.2)"
+                    ]
+                  }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                >
+                  <div className="white-dot" />
+                </motion.div>
+
+                <h1 className="text-4xl font-serif font-bold mb-8 text-foreground">
                   The Arrival
                 </h1>
-                <p className="text-lg text-muted-foreground mb-12">
+                <p className="text-lg text-foreground/60 mb-12">
                   Welcome back. Please identify yourself.
                 </p>
                 
                 <div className="space-y-6">
-                  <ConstellationInput
+                  <Input
                     type="email"
                     value={email}
-                    onChange={setEmail}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email address"
-                    className="text-center text-lg py-6"
+                    className="glass border-white/20 text-center text-lg py-6 bg-white/5"
                   />
                   
                   {greeting && (
-                    <p className="text-neon-blue font-medium animate-fade-in">
+                    <motion.p 
+                      className="text-blue font-medium"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6 }}
+                    >
                       {greeting}
-                    </p>
+                    </motion.p>
                   )}
                   
                   {email && email.includes("@") && (
-                    <button
-                      onClick={handleEmailSubmit}
-                      className="btn-neon"
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6 }}
                     >
-                      Continue
-                    </button>
+                      <Button
+                        onClick={handleEmailSubmit}
+                        className="btn-neon w-full py-4"
+                      >
+                        Continue
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    </motion.div>
                   )}
                 </div>
-              </div>
+              </motion.div>
             )}
 
             {/* Phase 2 - Entry */}
             {currentPhase === "entry" && (
-              <div className="text-center animate-fade-in">
-                <h1 className="text-4xl font-headline font-bold mb-8 text-foreground">
+              <motion.div
+                className="text-center"
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                <h1 className="text-4xl font-serif font-bold mb-8 text-foreground">
                   Entry Sequence
                 </h1>
-                <p className="text-lg text-muted-foreground mb-12">
+                <p className="text-lg text-foreground/60 mb-12">
                   Present your personal key.
                 </p>
                 
                 <form onSubmit={handleLogin} className="space-y-6">
-                  <ConstellationInput
-                    type="password"
-                    value={password}
-                    onChange={setPassword}
-                    placeholder="Enter your password"
-                    className="text-center text-lg py-6"
-                  />
+                  <div className="relative">
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter your password"
+                      className="glass border-white/20 text-center text-lg py-6 bg-white/5 pr-12"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 text-foreground/40 hover:text-foreground transition-colors"
+                    >
+                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
+                  </div>
                   
-                  <button
+                  <Button
                     type="submit"
-                    className="btn-neon text-lg px-12 py-4"
+                    className="btn-neon w-full py-4 text-lg"
                     disabled={!password}
                   >
-                    Enter
-                  </button>
+                    Enter the Atelier
+                  </Button>
                   
                   <button
                     type="button"
-                    onClick={() => setShowPasswordReset(true)}
-                    className="block mx-auto text-sm text-muted-foreground hover:text-neon-blue transition-colors"
+                    className="block mx-auto text-sm text-foreground/50 hover:text-blue transition-colors"
                   >
                     Assistance with your key?
                   </button>
                 </form>
-
-                {/* Staff Entry Link */}
-                <div className="mt-12 pt-8 border-t border-primary/20">
-                  <Link
-                    to="/login/staff"
-                    className="text-muted-foreground hover:text-luxury-periwinkle transition-colors text-sm"
-                  >
-                    Staff entry →
-                  </Link>
-                </div>
-              </div>
+              </motion.div>
             )}
 
             {/* Register Link */}
             <div className="text-center mt-8">
-              <p className="text-muted-foreground">
+              <p className="text-foreground/50">
                 New to Neon Tech?{" "}
                 <Link
                   to="/register"
-                  className="text-neon-blue hover:underline font-medium"
+                  className="text-blue hover:text-blue/80 font-medium transition-colors"
                 >
                   Request membership
                 </Link>
@@ -175,50 +191,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-
-      {/* Password Reset Modal */}
-      {showPasswordReset && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="glass-strong max-w-md w-full p-8 rounded-2xl">
-            <h3 className="text-2xl font-headline font-bold mb-6 text-neon text-center">
-              Key Recovery
-            </h3>
-            <p className="text-muted-foreground mb-6 text-center leading-relaxed">
-              We'll send recovery instructions to your registered email address.
-            </p>
-            
-            <div className="space-y-4">
-              <ConstellationInput
-                type="email"
-                value={email}
-                onChange={() => {}} // Read-only in this context
-                placeholder="Registered email"
-                className="text-center"
-              />
-              
-              <div className="flex space-x-4">
-                <button
-                  onClick={() => setShowPasswordReset(false)}
-                  className="btn-glass flex-1"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => {
-                    // Simulate sending recovery email
-                    alert("Recovery instructions sent!");
-                    setShowPasswordReset(false);
-                  }}
-                  className="btn-neon flex-1"
-                >
-                  Send Instructions
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+    </AuraBackground>
   );
 };
 

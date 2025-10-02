@@ -159,12 +159,12 @@ const Leaderboard = () => {
                             {/* User Info */}
                             <div>
                               <div className="flex items-center space-x-2 mb-1">
-                                <h3 className="font-serif font-bold text-foreground group-hover:text-primary transition-colors">
+                                <h3 className="font-serif font-bold text-foreground group-hover:text-blue transition-colors">
                                   {user.name}
                                 </h3>
                                 {user.verified && (
                                   <motion.div
-                                    className="w-4 h-4 bg-primary rounded-full flex items-center justify-center"
+                                    className="w-4 h-4 bg-blue rounded-full flex items-center justify-center"
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
                                     transition={{ delay: 0.3 + index * 0.05, type: "spring" }}
@@ -188,7 +188,7 @@ const Leaderboard = () => {
                           {/* Score & Growth */}
                           <div className="text-right">
                             <motion.div
-                              className="text-2xl font-bold text-primary mb-1"
+                              className="text-2xl font-bold text-blue mb-1"
                               initial={{ opacity: 0, scale: 0.5 }}
                               animate={{ opacity: 1, scale: 1 }}
                               transition={{ delay: 0.5 + index * 0.05, type: "spring" }}
@@ -214,7 +214,7 @@ const Leaderboard = () => {
                                 {user.badges.map((badge, badgeIndex) => (
                                   <motion.div
                                     key={badgeIndex}
-                                    className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-medium"
+                                    className="px-3 py-1 bg-gold/10 text-gold rounded-full text-xs font-medium"
                                     initial={{ opacity: 0, scale: 0.8 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     transition={{ delay: badgeIndex * 0.05, duration: 0.2 }}
@@ -238,7 +238,7 @@ const Leaderboard = () => {
                             {[...Array(12)].map((_, i) => (
                               <motion.div
                                 key={i}
-                                className="absolute w-1 h-1 bg-primary rounded-full"
+                                className="absolute w-1 h-1 bg-gold rounded-full"
                                 style={{
                                   left: `${Math.random() * 100}%`,
                                   top: `${Math.random() * 100}%`,
@@ -276,7 +276,7 @@ const Leaderboard = () => {
           >
             <h2 className="text-3xl font-serif font-bold text-foreground mb-6">
               Ready to climb the{" "}
-              <span className="text-luxury">leaderboard?</span>
+              <span className="text-blue">leaderboard?</span>
             </h2>
             <p className="text-foreground/70 mb-8 max-w-2xl mx-auto">
               Create exceptional content, engage with the community, and watch your digital fingerprint rise

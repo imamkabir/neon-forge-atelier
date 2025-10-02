@@ -19,14 +19,9 @@ export default {
       },
       colors: {
         // Neon Tech Luxury Palette
-        'bg': 'hsl(var(--bg))',
-        'ink': 'hsl(var(--ink))',
         'blue': 'hsl(var(--blue))',
         'crimson': 'hsl(var(--crimson))',
-        'violet': 'hsl(var(--violet))',
-        
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
+        'gold': 'hsl(var(--gold))',
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

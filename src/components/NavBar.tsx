@@ -25,13 +25,14 @@ const NavBar = () => {
     { name: "Templates", path: "/templates" },
     { name: "Builder", path: "/builder" },
     { name: "Feed", path: "/feed" },
+    { name: "Leaderboard", path: "/leaderboard" },
     { name: "Contact", path: "/contact" },
   ];
 
   const utilityItems = [
     { icon: Bell, path: "/notifications", badge: 3 },
     { icon: MessageCircle, path: "/messages", badge: 1 },
-    { icon: User, path: "/dashboard" },
+    { icon: User, path: "/dashboard", badge: undefined },
   ];
 
   const isActive = (path: string) => {
